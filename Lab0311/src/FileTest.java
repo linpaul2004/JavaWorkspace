@@ -11,6 +11,10 @@ public class FileTest {
 			System.out.println("Name:" + name);
 			System.out.println("ID:" + id);
 			System.out.println("School:" + school);
+			while (scanner.hasNextLine()) {
+				String line = scanner.nextLine();
+				System.out.println(line);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
