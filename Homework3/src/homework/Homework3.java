@@ -1,6 +1,6 @@
 package homework;
 
-import java.util.HashSet;
+import java.util.Arrays;
 
 public class Homework3 {
 
@@ -10,37 +10,23 @@ public class Homework3 {
 			System.out.println(check(Integer.parseInt(args[0].substring(2))));
 		} else {
 			int index = Integer.parseInt(args[0].substring(2));
-			if (index <= 6) {
-				System.out.println(index);
-			} else {
-				HashSet<Integer> sequence = new HashSet<>();
-				sequence.add(1);
-				sequence.add(2);
-				sequence.add(3);
-				sequence.add(4);
-				sequence.add(5);
-				sequence.add(6);
-				int i;
-				for (i = 7; sequence.size() != index; i++) {
-					int tmp = i;
-					while (true) {
-						if (tmp % 2 == 0) {
-							tmp /= 2;
-						} else if (tmp % 3 == 0) {
-							tmp /= 3;
-						} else if (tmp % 5 == 0) {
-							tmp /= 5;
-						} else {
-							break;
-						}
-						if (sequence.contains(tmp)) {
-							sequence.add(i);
-							break;
+			int[] sequence = new int[8685];
+			int cnt = 0;
+			for (int i = 0; i <= 13; i++) {
+				for (int j = 0; j <= 19; j++) {
+					for (int k = 0; k <= 30; k++) {
+						if (Math.pow(2, k) < Double.MAX_VALUE / Math.pow(3, j)) {
+							double res = Math.pow(2, k) * Math.pow(3, j);
+							if (res < Double.MAX_VALUE / Math.pow(5, i)) {
+								res *= Math.pow(5, i);
+								sequence[cnt++] = (int) res;
+							}
 						}
 					}
 				}
-				System.out.println(i - 1);
 			}
+			Arrays.sort(sequence, 0, cnt);
+			System.out.println(sequence[index - 1]);
 		}
 	}
 
