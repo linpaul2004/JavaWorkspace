@@ -56,6 +56,9 @@ public class MorseCode {
 		String decoded = "";
 		String[] word, character;
 		word = morse.split("0000000");
+		if (word.length < 1) {
+			return "*INVALID*";
+		}
 		for (int i = 0; i < word.length; i++) {
 			character = word[i].split("000");
 			if (character.length < 1) {
