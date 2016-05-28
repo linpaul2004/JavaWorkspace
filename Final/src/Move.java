@@ -64,16 +64,17 @@ public class Move implements KeyListener {
 
 		////////////////////////////////////////////////////////////////////////////////////////////
 
-		case KeyEvent.VK_SPACE:
-
+		case KeyEvent.VK_SPACE:	       
 			int tmp = Main.y[0][0];
+            int stbrick1=0;
 			for (int i = 0; i < 4; i++) {
 				if (Main.y[0][i] > tmp) {
 					tmp = Main.y[0][i];
+                    stbrick1=Main.x[0][i];
 				}
 			}
-
 			int miny = 0;
+			int stbrick2=0;
 			int stoppos = Main.colSize - 1;
 			boolean downtobottom = false;
 
@@ -81,7 +82,7 @@ public class Move implements KeyListener {
 				for (int j = tmp + 1; j < Main.colSize; j++) {
 					if (Main.player[0][Main.x[0][i]][j] == 1) {
 						downtobottom = false;
-						miny = j - 1;
+						miny = j -1;
 						break;
 					}
 					downtobottom = true;
@@ -90,16 +91,26 @@ public class Move implements KeyListener {
 					continue;
 				}
 				if (miny < stoppos) {
-					stoppos = miny;
+				  stbrick2=Main.x[0][i];
+				  stoppos = miny;
+				}			
+			}           
+
+			if(stbrick1!=stbrick2){
+				for(int i=0;i<4;i++){
+				 if(Main.x[0][i]==stbrick2 ){
+					if(Main.y[0][i]==tmp)break;	
+					else{ 
+					 tmp=Main.y[0][i];
+					}
+				 }
 				}
-			}
+			}        		
 
-			Main.demap(0);
-
+			Main.demap(0);         
 			for (int i = 0; i < 4; i++) {
 				Main.y[0][i] += stoppos - tmp;
-			}
-
+			}			
 			Main.map(0);
 			Main.setIcon(0);
 			break;
@@ -159,44 +170,58 @@ public class Move implements KeyListener {
 		/////////////////////////////////////////////////////////////////////
 		case KeyEvent.VK_ENTER:
 
-			int tmp1 = Main.y[1][0];
+		    tmp = Main.y[1][0];
+            stbrick1=0;
 			for (int i = 0; i < 4; i++) {
-				if (Main.y[1][i] > tmp1) {
-					tmp1 = Main.y[1][i];
+				if (Main.y[1][i] > tmp) {
+					tmp = Main.y[1][i];
+                    stbrick1=Main.x[1][i];
 				}
 			}
 
-			int miny1 = 0;
-			int stoppos1 = Main.colSize - 1;
-			boolean downtobottom1 = false;
+			miny = 0;
+			stbrick2=0;
+			stoppos = Main.colSize - 1;
+			downtobottom = false;	
 
 			for (int i = 0; i < 4; i++) {
-				for (int j = tmp1 + 1; j < Main.colSize; j++) {
+				for (int j = tmp + 1; j < Main.colSize; j++) {
 					if (Main.player[1][Main.x[1][i]][j] == 1) {
-						downtobottom1 = false;
-						miny1 = j - 1;
+						downtobottom = false;
+						miny = j -1;
 						break;
 					}
-					downtobottom1 = true;
+					downtobottom = true;
 				}
-				if (downtobottom1) {
+				if (downtobottom) {
 					continue;
 				}
-				if (miny1 < stoppos1) {
-					stoppos1 = miny1;
+				if (miny < stoppos) {
+				  stbrick2=Main.x[1][i];
+				  stoppos = miny;
 				}
-			}
+			
+			}            
 
-			Main.demap(1);
+			if(stbrick1!=stbrick2){
+				for(int i=0;i<4;i++){
+				 if(Main.x[1][i]==stbrick2 ){
+					if(Main.y[1][i]==tmp)break;	
+					else{ 
+					 tmp=Main.y[1][i];
+					}
+				 }
+				}
+			}        		
 
+			Main.demap(1);         
 			for (int i = 0; i < 4; i++) {
-				Main.y[1][i] += stoppos1 - tmp1;
-			}
-
+				Main.y[1][i] += stoppos - tmp;
+			}			
 			Main.map(1);
 			Main.setIcon(1);
 			break;
-		default:
+		   default:
 
 		}
 	}
