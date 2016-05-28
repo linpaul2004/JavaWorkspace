@@ -1,14 +1,16 @@
 
 public class Square extends Tetris{
-	Square(){
-	Main.x[0]=4;Main.x[1]=4;Main.x[2]=5;Main.x[3]=5;
-	Main.y[0]=0;Main.y[1]=1;Main.y[2]=0;Main.y[3]=1;
+	Square(int num){
+		
+	Main.x[num][0]=4;Main.x[num][1]=4;Main.x[num][2]=5;Main.x[num][3]=5;
+	Main.y[num][0]=0;Main.y[num][1]=1;Main.y[num][2]=0;Main.y[num][3]=1;
 	
-	Main.player[Main.x[0]][Main.y[0]] = 1;
-	Main.player[Main.x[1]][Main.y[1]] = 1;
-	Main.player[Main.x[2]][Main.y[2]] = 1;
-	Main.player[Main.x[3]][Main.y[3]] = 1;
+	Main.map(num);
 	}
 	
-	public boolean rotation(int count){return true;}
+	Square(){
+		
+	}
+	
+	public boolean rotation(int count,int num){return true;}
 }
