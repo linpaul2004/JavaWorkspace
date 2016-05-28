@@ -64,52 +64,39 @@ public class Move implements KeyListener {
 
 		////////////////////////////////////////////////////////////////////////////////////////////
 
-		case KeyEvent.VK_SPACE:	       
-			int tmp = Main.y[0][0];
-            int stbrick1=0;
+		case KeyEvent.VK_SPACE:	  
+			if(blk.fallBlock(0)){break;}
+			int tmp=Main.colSize;
+			boolean downtobottom=true;
+			boolean findstop=false;
+			int stx=-1;
 			for (int i = 0; i < 4; i++) {
-				if (Main.y[0][i] > tmp) {
-					tmp = Main.y[0][i];
-                    stbrick1=Main.x[0][i];
-				}
-			}
-			int miny = 0;
-			int stbrick2=0;
-			int stoppos = Main.colSize - 1;
-			boolean downtobottom = false;
-
-			for (int i = 0; i < 4; i++) {
-				for (int j = tmp + 1; j < Main.colSize; j++) {
-					if (Main.player[0][Main.x[0][i]][j] == 1) {
-						downtobottom = false;
-						miny = j -1;
-						break;
-					}
-					downtobottom = true;
-				}
-				if (downtobottom) {
-					continue;
-				}
-				if (miny < stoppos) {
-				  stbrick2=Main.x[0][i];
-				  stoppos = miny;
-				}			
-			}           
-
-			if(stbrick1!=stbrick2){
-				for(int i=0;i<4;i++){
-				 if(Main.x[0][i]==stbrick2 ){
-					if(Main.y[0][i]==tmp)break;	
-					else{ 
-					 tmp=Main.y[0][i];
-					}
+			  for(int j=Main.y[0][i]+1;j<Main.colSize;j++){				
+				if (Main.x[0][i]!=stx && Main.player[0][ Main.x[0][i] ][ j ] == 0  ) {
+			     findstop=true;
+				 for(int k=j;k<Main.colSize;k++){
+                   if (Main.player[0][ Main.x[0][i] ][ k ] == 1){
+                	 if(tmp>k-j){
+                	  tmp=k-j;
+                	 }        
+                	 stx=Main.x[0][i];
+                	 downtobottom=false;
+                	 j=Main.colSize+1; //to break from j
+                	 break; //break from k
+                   }//if==1,second search
+                   downtobottom=true;                 
+                  }//for k
+				 if(downtobottom){
+                    if(tmp> Main.colSize-Main.y[0][i]-1){tmp=Main.colSize-Main.y[0][i]-1;}
 				 }
-				}
-			}        		
+				}//if==0,first search
+			   }//for j
+			  if(!findstop){break;}
+			}//for i
 
 			Main.demap(0);         
 			for (int i = 0; i < 4; i++) {
-				Main.y[0][i] += stoppos - tmp;
+				Main.y[0][i] +=  tmp;
 			}			
 			Main.map(0);
 			Main.setIcon(0);
@@ -169,59 +156,43 @@ public class Move implements KeyListener {
 
 		/////////////////////////////////////////////////////////////////////
 		case KeyEvent.VK_ENTER:
-
-		    tmp = Main.y[1][0];
-            stbrick1=0;
+			if(blk.fallBlock(1)){break;}
+			tmp=Main.colSize;
+			downtobottom=true;
+			findstop=false;
+			stx=-1;
 			for (int i = 0; i < 4; i++) {
-				if (Main.y[1][i] > tmp) {
-					tmp = Main.y[1][i];
-                    stbrick1=Main.x[1][i];
-				}
-			}
-
-			miny = 0;
-			stbrick2=0;
-			stoppos = Main.colSize - 1;
-			downtobottom = false;	
-
-			for (int i = 0; i < 4; i++) {
-				for (int j = tmp + 1; j < Main.colSize; j++) {
-					if (Main.player[1][Main.x[1][i]][j] == 1) {
-						downtobottom = false;
-						miny = j -1;
-						break;
-					}
-					downtobottom = true;
-				}
-				if (downtobottom) {
-					continue;
-				}
-				if (miny < stoppos) {
-				  stbrick2=Main.x[1][i];
-				  stoppos = miny;
-				}
-			
-			}            
-
-			if(stbrick1!=stbrick2){
-				for(int i=0;i<4;i++){
-				 if(Main.x[1][i]==stbrick2 ){
-					if(Main.y[1][i]==tmp)break;	
-					else{ 
-					 tmp=Main.y[1][i];
-					}
+			  for(int j=Main.y[1][i]+1;j<Main.colSize;j++){				
+				if (Main.x[1][i]!=stx && Main.player[1][ Main.x[1][i] ][ j ] == 0  ) {
+			     findstop=true;
+				 for(int k=j;k<Main.colSize;k++){
+                   if (Main.player[1][ Main.x[1][i] ][ k ] == 1){
+                	 if(tmp>k-j){
+                	  tmp=k-j;
+                	 }        
+                	 stx=Main.x[1][i];
+                	 downtobottom=false;
+                	 j=Main.colSize+1; //to break from j
+                	 break; //break from k
+                   }//if==1,second search
+                   downtobottom=true;                 
+                  }//for k
+				 if(downtobottom){
+                    if(tmp> Main.colSize-Main.y[1][i]-1){tmp=Main.colSize-Main.y[1][i]-1;}
 				 }
-				}
-			}        		
+				}//if==0,first search
+			   }//for j
+			  if(!findstop){break;}
+			}//for i
 
 			Main.demap(1);         
 			for (int i = 0; i < 4; i++) {
-				Main.y[1][i] += stoppos - tmp;
+				Main.y[1][i] +=  tmp;
 			}			
 			Main.map(1);
 			Main.setIcon(1);
 			break;
-		   default:
+		    default:
 
 		}
 	}
