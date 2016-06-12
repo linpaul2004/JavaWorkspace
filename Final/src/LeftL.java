@@ -4,8 +4,12 @@ public class LeftL extends Tetris{
 		
 	Main.x[num][0]=4;Main.x[num][1]=4;Main.x[num][2]=5;Main.x[num][3]=6;
 	Main.y[num][0]=0;Main.y[num][1]=1;Main.y[num][2]=1;Main.y[num][3]=1;
-	
-	Main.map(num);
+	//if(num == 0){
+	//	Main.current1 = 4;
+	//}else if(num == 1){
+	//	Main.current2 = 4;
+	//}
+	Main.map(num,4);
 	}
 	
 	LeftL(){
@@ -32,9 +36,9 @@ public class LeftL extends Tetris{
 			tempY2 = Main.y[num][2];
 			tempY3 = Main.y[num][3];
 			if(tempY0-1<0) return false;
-			if(Main.player[num][tempX0+1][tempY0-1] == 1 ) return false;
-			if(Main.player[num][tempX0+2][tempY0-1] == 1 ) return false;
-			if(Main.player[num][tempX0+1][tempY0] == 1 ) return false;
+			if(Main.player[num][tempX0+1][tempY0-1] != 0 ) return false;
+			if(Main.player[num][tempX0+2][tempY0-1] != 0 ) return false;
+			if(Main.player[num][tempX0+1][tempY0] != 0 ) return false;
 			/////////////////////////////////////////////////
 			Main.demap(num);
 			
@@ -48,7 +52,7 @@ public class LeftL extends Tetris{
 			Main.y[num][2]= tempY2-1;
 			Main.y[num][3]= tempY3;
 			
-			Main.map(num);
+			Main.map(num,4);
 			Main.setIcon(num);
 			break;
 		case 2:
@@ -61,9 +65,9 @@ public class LeftL extends Tetris{
 			tempY2 = Main.y[num][2];
 			tempY3 = Main.y[num][3];
 			if(tempX2-1<0) return false;
-			if(Main.player[num][tempX2-1][tempY2] == 1 ) return false;
-			if(Main.player[num][tempX2+1][tempY2] == 1 ) return false;
-			if(Main.player[num][tempX2+1][tempY2+1] == 1 ) return false;
+			if(Main.player[num][tempX2-1][tempY2] != 0 ) return false;
+			if(Main.player[num][tempX2+1][tempY2] != 0 ) return false;
+			if(Main.player[num][tempX2+1][tempY2+1] != 0 ) return false;
 			///////////////////////////////////////////////////
 			Main.demap(num);
 			
@@ -78,7 +82,7 @@ public class LeftL extends Tetris{
 			Main.y[num][3]= tempY3;
 			
 			
-			Main.map(num);
+			Main.map(num,4);
 			Main.setIcon(num);
 			break;
 			
@@ -92,9 +96,9 @@ public class LeftL extends Tetris{
 			tempY2 = Main.y[num][2];
 			tempY3 = Main.y[num][3];
 			if(tempY1-1<0) return false;
-			if(Main.player[num][tempX1][tempY1-1] == 1 ) return false;
-			if(Main.player[num][tempX1][tempY1+1] == 1 ) return false;
-			if(Main.player[num][tempX1-1][tempY1+1] == 1 ) return false;
+			if(Main.player[num][tempX1][tempY1-1] != 0 ) return false;
+			if(Main.player[num][tempX1][tempY1+1] != 0 ) return false;
+			if(Main.player[num][tempX1-1][tempY1+1] != 0 ) return false;
 			///////////////////////////////////////////////////
 			Main.demap(num);
 			
@@ -109,7 +113,7 @@ public class LeftL extends Tetris{
 			Main.y[num][3]= tempY3;
 			
 			
-			Main.map(num);
+			Main.map(num,4);
 			Main.setIcon(num);
 			break;
 		case 0:
@@ -122,9 +126,9 @@ public class LeftL extends Tetris{
 			tempY2 = Main.y[num][2];
 			tempY3 = Main.y[num][3];
 			if(tempX1+1>Main.rowSize-1) return false;
-			if(Main.player[num][tempX1-1][tempY1-1] == 1 ) return false;
-			if(Main.player[num][tempX1-1][tempY1] == 1 ) return false;
-			if(Main.player[num][tempX1+1][tempY1] == 1 ) return false;
+			if(Main.player[num][tempX1-1][tempY1-1] != 0 ) return false;
+			if(Main.player[num][tempX1-1][tempY1] != 0 ) return false;
+			if(Main.player[num][tempX1+1][tempY1] != 0 ) return false;
 			///////////////////////////////////////////////////
 			Main.demap(num);
 			
@@ -139,7 +143,7 @@ public class LeftL extends Tetris{
 			Main.y[num][3]= tempY3-1;
 			
 			
-			Main.map(num);
+			Main.map(num,4);
 			Main.setIcon(num);
 			break;
 		

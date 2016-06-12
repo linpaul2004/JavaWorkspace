@@ -4,6 +4,14 @@ import java.awt.event.KeyListener;
 public class Rotate implements KeyListener{
 	static int rotation1 = 0;
 	static int rotation2 = 0;
+	int tempX0;
+	int tempX1;
+	int tempX2;
+	int tempX3;
+	int tempY0;
+	int tempY1;
+	int tempY2;
+	int tempY3;
 	Tetris t1 = null;
 	Tetris t2 = null;
 	
@@ -85,14 +93,7 @@ public class Rotate implements KeyListener{
   public void keyTyped(KeyEvent e) {}
   
   public boolean isTShape(int num){
-	    int tempX0 = Main.x[num][0];
-		int tempX1 = Main.x[num][1];
-		int tempX2 = Main.x[num][2];
-		int tempX3 = Main.x[num][3];
-		int tempY0 = Main.y[num][0];
-		int tempY1 = Main.y[num][1];
-		int tempY2 = Main.y[num][2];
-		int tempY3 = Main.y[num][3];
+	  setTemp(num);
 		if(tempX1 == tempX0 && tempX2 == tempX0 && tempX3 == tempX0+1){
 			if(tempY1 == tempY0+1 && tempY2 == tempY0+2 && tempY3 == tempY0+1){
 				return true;
@@ -103,14 +104,7 @@ public class Rotate implements KeyListener{
   }
   
   public boolean isSquare(int num){
-	  	int tempX0 = Main.x[num][0];
-	  	int tempX1 = Main.x[num][1];
-		int tempX2 = Main.x[num][2];
-		int tempX3 = Main.x[num][3];
-		int tempY0 = Main.y[num][0];
-		int tempY1 = Main.y[num][1];
-		int tempY2 = Main.y[num][2];
-		int tempY3 = Main.y[num][3];
+	  setTemp(num);
 		
 		if(tempX1 == tempX0 && tempX2 == tempX0+1 && tempX3 == tempX0+1){
 			if(tempY1 == tempY0+1 && tempY2 == tempY0 && tempY3 == tempY0+1){
@@ -121,14 +115,7 @@ public class Rotate implements KeyListener{
   }
  
   public boolean isLine(int num){
-	  	int tempX0 = Main.x[num][0];
-	  	int tempX1 = Main.x[num][1];
-		int tempX2 = Main.x[num][2];
-		int tempX3 = Main.x[num][3];
-		int tempY0 = Main.y[num][0];
-		int tempY1 = Main.y[num][1];
-		int tempY2 = Main.y[num][2];
-		int tempY3 = Main.y[num][3];
+	  setTemp(num);
 		if(tempX1 == tempX0+1 && tempX2 == tempX0+2 && tempX3 == tempX0+3){
 			if(tempY1 == tempY0 && tempY2 == tempY0 && tempY3 == tempY0){
 				return true;
@@ -138,14 +125,7 @@ public class Rotate implements KeyListener{
   }
   
   public boolean isLeftL(int num){
-	  	int tempX0 = Main.x[num][0];
-	  	int tempX1 = Main.x[num][1];
-		int tempX2 = Main.x[num][2];
-		int tempX3 = Main.x[num][3];
-		int tempY0 = Main.y[num][0];
-		int tempY1 = Main.y[num][1];
-		int tempY2 = Main.y[num][2];
-		int tempY3 = Main.y[num][3];
+	  setTemp(num);
 		if(tempX1 == tempX0 && tempX2 == tempX0+1 && tempX3 == tempX0+2){
 			if(tempY1 == tempY0+1 && tempY2 == tempY0+1 && tempY3 == tempY0+1){
 				return true;
@@ -155,14 +135,7 @@ public class Rotate implements KeyListener{
   }
   
   public boolean isLeftZ(int num){
-	  	int tempX0 = Main.x[num][0];
-	  	int tempX1 = Main.x[num][1];
-		int tempX2 = Main.x[num][2];
-		int tempX3 = Main.x[num][3];
-		int tempY0 = Main.y[num][0];
-		int tempY1 = Main.y[num][1];
-		int tempY2 = Main.y[num][2];
-		int tempY3 = Main.y[num][3];
+	  setTemp(num);
 		if(tempX1 == tempX0+1 && tempX2 == tempX0+1 && tempX3 == tempX0+2){
 			if(tempY1 == tempY0 && tempY2 == tempY0+1 && tempY3 == tempY0+1){
 				return true;
@@ -172,14 +145,7 @@ public class Rotate implements KeyListener{
   }
   
   public boolean isRightL(int num){
-	  	int tempX0 = Main.x[num][0];
-	  	int tempX1 = Main.x[num][1];
-		int tempX2 = Main.x[num][2];
-		int tempX3 = Main.x[num][3];
-		int tempY0 = Main.y[num][0];
-		int tempY1 = Main.y[num][1];
-		int tempY2 = Main.y[num][2];
-		int tempY3 = Main.y[num][3];
+	  setTemp(num);
 		if(tempX1 == tempX0-2 && tempX2 == tempX0-1 && tempX3 == tempX0){
 			if(tempY1 == tempY0+1 && tempY2 == tempY0+1 && tempY3 == tempY0+1){
 				return true;
@@ -189,19 +155,23 @@ public class Rotate implements KeyListener{
   }
   
   public boolean isRightZ(int num){
-	  	int tempX0 = Main.x[num][0];
-	  	int tempX1 = Main.x[num][1];
-		int tempX2 = Main.x[num][2];
-		int tempX3 = Main.x[num][3];
-		int tempY0 = Main.y[num][0];
-		int tempY1 = Main.y[num][1];
-		int tempY2 = Main.y[num][2];
-		int tempY3 = Main.y[num][3];
+	  setTemp(num);
 		if(tempX1 == tempX0+1 && tempX2 == tempX0-1 && tempX3 == tempX0){
 			if(tempY1 == tempY0 && tempY2 == tempY0+1 && tempY3 == tempY0+1){
 				return true;
 			}
 		}
 	  return false;
+  }
+  
+  public void setTemp(int num){
+	 tempX0 = Main.x[num][0];
+	 tempX1 = Main.x[num][1];
+	 tempX2 = Main.x[num][2];
+	 tempX3 = Main.x[num][3];
+	 tempY0 = Main.y[num][0];
+	 tempY1 = Main.y[num][1];
+	 tempY2 = Main.y[num][2];
+	 tempY3 = Main.y[num][3];
   }
 }

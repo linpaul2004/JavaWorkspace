@@ -16,7 +16,7 @@ public class Block {
 	public boolean fallBlock(int num) {
 		isBlock = false;
 		for (int i = 0; i < 4; i++) {
-			if (Main.player[num][Main.x[num][i]][Main.y[num][i] + 1] == 1) {
+			if (Main.player[num][Main.x[num][i]][Main.y[num][i] + 1] != 0) {
 				for (int j = 0; j < 4; j++) {
 					if (i != j && Main.x[num][i] == Main.x[num][j] && Main.y[num][j] > Main.y[num][i]) {
 						isBlock = false;
@@ -42,7 +42,7 @@ public class Block {
 
 		for (int i = 0; i < 4; i++) {
 
-			if (Main.player[num][Main.x[num][i] - 1][Main.y[num][i]] == 1) {
+			if (Main.player[num][Main.x[num][i] - 1][Main.y[num][i]] != 0) {
 				for (int j = 0; j < 4; j++) {
 					if (i != j && Main.y[num][i] == Main.y[num][j] && Main.x[num][j] == Main.x[num][i] - 1) {
 						isBlock = false;
@@ -66,7 +66,7 @@ public class Block {
 				return true;
 		}
 		for (int i = 0; i < 4; i++) {
-			if (Main.player[num][Main.x[num][i] + 1][Main.y[num][i]] == 1) {
+			if (Main.player[num][Main.x[num][i] + 1][Main.y[num][i]] != 0) {
 				for (int j = 0; j < 4; j++) {
 					if (i != j && Main.y[num][i] == Main.y[num][j] && Main.x[num][j] == Main.x[num][i] + 1) {
 						isBlock = false;

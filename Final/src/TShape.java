@@ -4,7 +4,7 @@ public class TShape extends Tetris{
 	Main.x[num][0]=4;Main.x[num][1]=4;Main.x[num][2]=4;Main.x[num][3]=5;
 	Main.y[num][0]=0;Main.y[num][1]=1;Main.y[num][2]=2;Main.y[num][3]=1;
 	
-	Main.map(num);
+	Main.map(num,1);
 	
 	
 	}
@@ -21,7 +21,7 @@ public class TShape extends Tetris{
 			if(Main.x[num][1]+1 > Main.rowSize-1) return false;
 			if(Main.y[num][1]-1 < 0) return false;
 			if(Main.y[num][1]+1 > Main.colSize-1) return false;
-			if(Main.player[num][Main.x[num][1]-1][Main.y[num][1]  ] == 1 ) return false;
+			if(Main.player[num][Main.x[num][1]-1][Main.y[num][1]  ] != 0 ) return false;
 			/////////////////////////////////////////////////
 			Main.demap(num);
 			
@@ -35,7 +35,7 @@ public class TShape extends Tetris{
 			Main.y[num][2]= Main.y[num][1];
 			Main.y[num][3]= Main.y[num][1]+1;
 			
-			Main.map(num);
+			Main.map(num,1);
 			Main.setIcon(num);
 			break;
 			
@@ -44,7 +44,7 @@ public class TShape extends Tetris{
 			if(Main.x[num][1]+1 > Main.rowSize-1) return false;
 			if(Main.y[num][1]-1 < 0) return false;
 			if(Main.y[num][1]+1 > Main.colSize-1) return false;
-			if(Main.player[num][Main.x[num][1]][Main.y[num][1]-1 ] == 1 ) return false;
+			if(Main.player[num][Main.x[num][1]][Main.y[num][1]-1 ] != 0 ) return false;
 			///////////////////////////////////////////////////
 			Main.demap(num);
 			
@@ -58,7 +58,7 @@ public class TShape extends Tetris{
 			Main.y[num][2]= Main.y[num][1]-1;
 			Main.y[num][3]= Main.y[num][1]+1;
 			
-			Main.map(num);
+			Main.map(num,1);
 			Main.setIcon(num);
 			break;
 		case 3:
@@ -66,7 +66,7 @@ public class TShape extends Tetris{
 			if(Main.x[num][1]+1 > Main.rowSize-1) return false;
 			if(Main.y[num][1]-1 < 0) return false;
 			if(Main.y[num][1]+1 > Main.colSize-1) return false;
-			if(Main.player[num][Main.x[num][1]+1][Main.y[num][1]  ] == 1 ) return false;
+			if(Main.player[num][Main.x[num][1]+1][Main.y[num][1]  ] != 0 ) return false;
 			///////////////////////////////////////////////////
 			Main.demap(num);
 			
@@ -80,7 +80,7 @@ public class TShape extends Tetris{
 			Main.y[num][2]= Main.y[num][1]-1;
 			Main.y[num][3]= Main.y[num][1];
 			
-			Main.map(num);
+			Main.map(num,1);
 			Main.setIcon(num);
 			break;
 		case 0:
@@ -88,7 +88,7 @@ public class TShape extends Tetris{
 			if(Main.x[num][1]+1 > Main.rowSize-1) return false;
 			if(Main.y[num][1]-1 < 0) return false;
 			if(Main.y[num][1]+1 > Main.colSize-1) return false;
-			if(Main.player[num][Main.x[num][1]][Main.y[num][1]+1] == 1 ) return false;
+			if(Main.player[num][Main.x[num][1]][Main.y[num][1]+1] != 0 ) return false;
 			///////////////////////////////////////////////////
 			Main.demap(num);
 			
@@ -102,7 +102,7 @@ public class TShape extends Tetris{
 			Main.y[num][2]= Main.y[num][1]+1;
 			Main.y[num][3]= Main.y[num][1];
 			
-			Main.map(num);
+			Main.map(num,1);
 			Main.setIcon(num);
 			break;
 		
