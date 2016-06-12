@@ -11,6 +11,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -23,7 +24,9 @@ public class Main {
 	static JLabel[][][] lb = new JLabel[2][rowSize][colSize];
 	static JLabel[][][] next = new JLabel[2][4][3];
 	static JLabel showLose = new JLabel();
+	static JLabel title = new JLabel();
 	static JTextArea[] scoreLabel = new JTextArea[2];
+	static JButton startButton = new JButton();
 	static ImageIcon icon = new ImageIcon("t1.png");
 	static ImageIcon icon1 = new ImageIcon("t.png");
 	static ImageIcon icon2 = new ImageIcon("t2.png");
@@ -33,11 +36,13 @@ public class Main {
 	static ImageIcon icon6 = new ImageIcon("t6.png");
 	static ImageIcon icon7 = new ImageIcon("t7.png");
 	static ImageIcon iconLose = new ImageIcon("lose.jpg");
+	static ImageIcon iconTitle = new ImageIcon("title.jpg");
 	static int[][] x = new int[2][4];
 	static int[][] y = new int[2][4];
 	static int[] score = new int[2];
 	static int loser;
 	static int current1, current2;
+	static boolean start;
 
 	public static void main(String[] args) {
 		int rand1;
@@ -48,16 +53,37 @@ public class Main {
 		Move mov = new Move();
 		Rotate rot = new Rotate();
 		JFrame frame = new JFrame();
+		start = false;
 		frame.setSize(1400, 870);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.addKeyListener(mov);
 		frame.addKeyListener(rot);
 		frame.add(showLose);
+		frame.add(title);
+		frame.add(startButton);
 		showLose.setIcon(iconLose);
 		showLose.setSize(showLose.getPreferredSize());
 		showLose.setVisible(false);
-
+		title.setIcon(iconTitle);
+		title.setSize(title.getPreferredSize());
+		title.setLocation(frame.getSize().width / 2 - title.getSize().width / 2, 300);
+		startButton.setText("Start Game");
+		startButton.setSize(startButton.getPreferredSize());
+		startButton.setLocation(frame.getSize().width / 2 - startButton.getSize().width / 2, 550);
+		startButton.addActionListener(new ButtonControl());
 		frame.setLayout(null);
+		frame.setVisible(true);
+		while (start == false) {
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		title.setVisible(false);
+		startButton.setVisible(false);
+
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 10; j++) {
 				for (int k = 0; k < 20; k++) {
@@ -120,7 +146,7 @@ public class Main {
 				frame.add(next[1][i][j]);
 			}
 		}
-		frame.setVisible(true);
+		frame.repaint();
 
 		while (true) {
 			randNext1 = ran.nextInt(7) + 1;
