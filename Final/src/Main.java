@@ -73,6 +73,7 @@ public class Main {
 		startButton.addActionListener(new ButtonControl());
 		frame.setLayout(null);
 		frame.setVisible(true);
+		startButton.setFocusable(false);
 		while (start == false) {
 			try {
 				Thread.sleep(500);
