@@ -11,18 +11,20 @@ public class ButtonControl implements ActionListener {
 		if (e.getActionCommand().equals("Battle")) {
 			Main.mod = "battle";
 		}
-		
+
 		if (e.getActionCommand().equals("Single")) {
 			Main.mod = "single";
 		}
-		
+
 		if (e.getActionCommand().equals("Start")) {
 			Main.startSignal = true;
 		}
-		
+
 		if (e.getActionCommand().equals("Rank")) {
-			//JOptionPane.showMessageDialog(null, Main.setHighScore);
-			System.out.println("rank");
+			// JOptionPane.showMessageDialog(null, Main.setHighScore);
+			HighScore.readScore();
+			Main.highscore.setLocationRelativeTo(Main.frame);
+			Main.highscore.setVisible(true);
 		}
 	}
 

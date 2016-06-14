@@ -1,17 +1,10 @@
 
 import java.awt.Font;
 import java.awt.SystemColor;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Random;
-import java.util.Scanner;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
 public class Main {
@@ -29,12 +22,12 @@ public class Main {
 	static ImageIcon icon5 = new ImageIcon("t5.png");
 	static ImageIcon icon6 = new ImageIcon("t6.png");
 	static ImageIcon icon7 = new ImageIcon("t7.png");
-   //attack
+	// attack
 	static ImageIcon iconbrick = new ImageIcon("brick.png");
-	static boolean attack0,attack1;  
-	static int[] attacktime=new int[2];
-   ////////////	
-	
+	static boolean attack0, attack1;
+	static int[] attacktime = new int[2];
+	////////////
+
 	static int[][] x = new int[2][4];
 	static int[][] y = new int[2][4];
 	static int[] score = new int[2];
@@ -42,27 +35,22 @@ public class Main {
 	static int current1, current2;
 	static boolean startSignal = false;
 	static String mod = "";
-	
-	
-	
+	static HighScore highscore = new HighScore();
+	static Component frame = new Component();
+
 	public static void main(String[] args) {
 		int rand1;
 		int rand2;
 		int randNext1;
 		int randNext2;
-		Component frame = new Component();
 		Random ran = new Random();
 		Move mov = new Move();
 		Rotate rot = new Rotate();
 		frame.addKeyListener(mov);
 		frame.addKeyListener(rot);
-		Main m = new Main();
-		
+
 		//////////////////////////////////////////////////////
-		frame.setLayout(null);
-		frame.setVisible(true);
 		while (mod.equals("battle") == false && mod.equals("single") == false) {
-			System.out.println("");
 			frame.gameStart.setVisible(false);
 			try {
 				Thread.sleep(500);
@@ -71,7 +59,7 @@ public class Main {
 				e.printStackTrace();
 			}
 		}
-		
+
 		frame.setting();
 
 		for (int i = 0; i < 2; i++) {
@@ -81,11 +69,11 @@ public class Main {
 				}
 			}
 		}
-		
+
 		score[0] = score[1] = 0;
 		loser = -1;
 		/////
-		attacktime[0]=attacktime[1]=0;
+		attacktime[0] = attacktime[1] = 0;
 		////
 		scoreLabel[0] = new JTextArea();
 		scoreLabel[0].setBackground(SystemColor.control);
@@ -96,8 +84,10 @@ public class Main {
 		scoreLabel[0].setLocation(500, 400);
 		frame.add(scoreLabel[0]);
 		scoreLabel[0].setFocusable(false);
-		
-		if(mod.equals("battle") == true){
+
+		HighScore.mode = mod;
+
+		if (mod.equals("battle") == true) {
 			scoreLabel[1] = new JTextArea();
 			scoreLabel[1].setBackground(SystemColor.control);
 			scoreLabel[1].setEditable(false);
@@ -108,24 +98,23 @@ public class Main {
 			frame.add(scoreLabel[1]);
 			scoreLabel[1].setFocusable(false);
 		}
-		
+
 		for (int i = 0; i < rowSize; i++) {
 			for (int j = 0; j < colSize; j++) {
 				lb[0][i][j] = new JLabel();
 				lb[0][i][j].setIcon(icon);
-				lb[0][i][j].setLocation(41 * (i + 1), 41 * (j - 0));
+				lb[0][i][j].setLocation(41 * (i + 1), 41 * (j - 2));
 				lb[0][i][j].setSize(40, 40);
 				frame.add(lb[0][i][j]);
-				
-				if(mod.equals("battle") == true){
+
+				if (mod.equals("battle") == true) {
 					lb[1][i][j] = new JLabel();
 					lb[1][i][j].setIcon(icon);
-					lb[1][i][j].setLocation(41 * (i + 1) + 700, 41 * (j - 0));
+					lb[1][i][j].setLocation(41 * (i + 1) + 700, 41 * (j - 2));
 					lb[1][i][j].setSize(40, 40);
 					frame.add(lb[1][i][j]);
 				}
-				
-				
+
 			}
 		}
 
@@ -136,25 +125,24 @@ public class Main {
 				next[0][i][j].setLocation(41 * (i + 1) + 450, 41 * (j) + 150);
 				next[0][i][j].setSize(40, 40);
 				frame.add(next[0][i][j]);
-				
-				if(mod.equals("battle") == true){
+
+				if (mod.equals("battle") == true) {
 					next[1][i][j] = new JLabel();
 					next[1][i][j].setIcon(icon);
 					next[1][i][j].setLocation(41 * (i + 1) + 1150, 41 * (j) + 150);
 					next[1][i][j].setSize(40, 40);
 					frame.add(next[1][i][j]);
 				}
-				
-				
+
 			}
 		}
 		frame.repaint();
 
 		while (mod.equals("battle") == true) {
-			System.out.println("");
 			frame.setSize(1400, 870);
-			if(startSignal == false) continue;
-			
+			if (startSignal == false)
+				continue;
+
 			randNext1 = ran.nextInt(7) + 1;
 			randNext2 = ran.nextInt(7) + 1;
 			rand1 = ran.nextInt(7) + 1;
@@ -216,7 +204,7 @@ public class Main {
 
 			////////////////////////////////////////////////////////////////////////
 			while (loser == -1) {
-				loser = m.isOver();
+				loser = isOver();
 				if (Tetris.fall() == 0) {
 					clear();
 					rot.rotation1 = 0;
@@ -290,21 +278,20 @@ public class Main {
 			frame.removeKeyListener(mov);
 			frame.showLose.setLocation(50 + loser * 720, 100);
 			frame.showLose.setVisible(true);
-			String message = "Player " + (loser == 0 ? 2 : 1) + " wins!" + "\nScore:" + score[1 - loser];
-			message += "\nHigh Score:\n";
-			message += (m.setHighscore(score[1 - loser], loser));
-			JOptionPane.showMessageDialog(null, message);
+			HighScore.setHighscore(score[1 - loser], loser);
+			highscore.setLocationRelativeTo(frame);
+			highscore.setVisible(true);
 			resetGame();
 			frame.showLose.setVisible(false);
 			frame.addKeyListener(rot);
 			frame.addKeyListener(mov);
 		}
-		
-		/////////////////////////////////single
+
+		///////////////////////////////// single
 		while (mod.equals("single") == true) {
 			frame.setSize(700, 870);
-			System.out.println("");
-			if(startSignal == false) continue;
+			if (startSignal == false)
+				continue;
 			randNext1 = ran.nextInt(7) + 1;
 			rand1 = ran.nextInt(7) + 1;
 			current1 = rand1;
@@ -334,12 +321,11 @@ public class Main {
 				break;
 			}
 
-			
 			Tetris.fall();
 
 			////////////////////////////////////////////////////////////////////////
 			while (loser == -1) {
-				loser = m.isOver();
+				loser = isOver();
 				if (Tetris.fall() == 0) {
 					clear();
 					//
@@ -375,19 +361,17 @@ public class Main {
 					}
 
 					Tetris.fall();
-				} 
+				}
 			}
 			frame.removeKeyListener(rot);
 			frame.removeKeyListener(mov);
-        	frame.showLose.setLocation(50 + loser * 720, 100);
+			frame.showLose.setLocation(50 + loser * 720, 100);
 			frame.showLose.setVisible(true);
-			String message = "";
-			//String message = "Player " + (loser == 0 ? 2 : 1) + " wins!" + "\nScore:" + score[1 - loser];
-			message += "\nHigh Score:\n";
-			message += (m.setHighscore(score[1 - loser], loser));
-			JOptionPane.showMessageDialog(null, message);
+			HighScore.setHighscore(score[1 - loser], loser);
+			highscore.setLocationRelativeTo(frame);
+			highscore.setVisible(true);
 			resetGame();
-	    	frame.showLose.setVisible(false);
+			frame.showLose.setVisible(false);
 			frame.addKeyListener(rot);
 			frame.addKeyListener(mov);
 		}
@@ -396,12 +380,13 @@ public class Main {
 	public static void resetGame() {
 		loser = -1;
 		score[0] = score[1] = 0;
-	    //////////
-		attacktime[0]=attacktime[1]=0;
 		//////////
-		
+		attacktime[0] = attacktime[1] = 0;
+		//////////
+
 		Tetris.speed = 1;
-		startSignal = false;;
+		startSignal = false;
+		;
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 10; j++) {
 				for (int k = 0; k < 20; k++) {
@@ -416,13 +401,15 @@ public class Main {
 			}
 		}
 		setIcon(0);
-		if(Main.mod.equals("battle") == true) setIcon(1);
+		if (Main.mod.equals("battle") == true) {
+			setIcon(1);
+		}
 	}
 
 	public static void setIcon(int num) {
 		for (int i = 0; i < rowSize; i++) {
 			for (int j = 0; j < colSize; j++) {
-			
+
 				switch (player[num][i][j]) {
 				case 1:
 					lb[num][i][j].setIcon(icon1);
@@ -456,62 +443,7 @@ public class Main {
 		}
 	}
 
-	public String setHighscore(int score, int loser) {
-		File fileHigh = new File("highscore.txt");
-		int winner = loser == 0 ? 2 : 1;
-		String output = "";
-		if (fileHigh.exists() == false) {
-			try {
-				fileHigh.createNewFile();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		try {
-			boolean last = true;
-			Scanner readin = new Scanner(new FileInputStream("highscore.txt"));
-			while (readin.hasNextInt()) {
-				int s = readin.nextInt();
-				if (s >= score) {
-					output += "" + s + " " + readin.nextInt() + "\n";
-				} else {
-					output += "" + score + " " + winner + "\n";
-					output += "" + s + " " + readin.nextInt() + "\n";
-					last = false;
-					break;
-				}
-			}
-			while (readin.hasNextInt()) {
-				output += "" + readin.nextInt() + " " + readin.nextInt() + "\n";
-			}
-			if (last) {
-				output += "" + score + " " + winner + "\n";
-			}
-			readin.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			PrintWriter writer = new PrintWriter(new FileOutputStream("highscore.txt"));
-			writer.write(output);
-			writer.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Scanner strScanner = new Scanner(output);
-		String realOutput = "";
-		while (strScanner.hasNextInt()) {
-			int s = strScanner.nextInt();
-			realOutput += "Player" + strScanner.nextInt() + " Score: " + s + "\n";
-		}
-		strScanner.close();
-		return realOutput;
-	}
-
-	public int isOver() {
+	public static int isOver() {
 		int over = 1;
 		for (int col = 2; col < colSize; col++) {
 			for (int row = 0; row < rowSize; row++) {
@@ -526,8 +458,8 @@ public class Main {
 		if (over == 1) {
 			return 0;
 		}
-		
-		if(mod.equals("battle") == true){
+
+		if (mod.equals("battle") == true) {
 			over = 1;
 			for (int col = 2; col < colSize; col++) {
 				for (int row = 0; row < rowSize; row++) {
@@ -545,12 +477,15 @@ public class Main {
 		}
 		return -1;
 	}
-	
+
 	public static void clear() {
 		boolean needClear;
 		int mod;
-		if(Main.mod.equals("battle") == true) mod = 2;
-		else {mod = 1;}
+		if (Main.mod.equals("battle") == true)
+			mod = 2;
+		else {
+			mod = 1;
+		}
 		for (int k = 0; k < mod; k++) {
 			int add = 50;
 			for (int i = Main.colSize - 1; i >= 0; i--) {
@@ -576,67 +511,69 @@ public class Main {
 			}
 			score[k] += add;
 			scoreLabel[k].setText("Score:\n" + score[k]);
-			
+
 		}
 	}
-	
+
 	//
-	public static void attack(int num){
-	  	
-       Random ran = new Random();
-       int randblank;
-       int up=0;
-       if(num==0){
-       //player1 attack player2		
-         if(score[0]>=(attacktime[0]+1)*200){
-           randblank = ran.nextInt(Main.rowSize);
-           up=(score[0]-attacktime[0]*200)/200;
-           attacktime[0]+=up;    
-           
-           demap(1);           
-              for(int i=0;i<Main.colSize-up;i++){
-               for(int j=0;j<Main.rowSize;j++){	
-                Main.player[1][j][i]=Main.player[1][j][i+up];
-               }			  
-              }
+	public static void attack(int num) {
 
-       
-              for(int k=1;k<=up;k++){
-               for(int i=0;i<Main.rowSize;i++){
-                if(i==randblank){Main.player[1][i][Main.colSize-k]=0;continue;}	  
-                Main.player[1][i][Main.colSize-k]=100;
-               }
-              }
-              map(1,Main.current2);
-             }
-       }
-       else{
-            //player2 attack player1
-            if(score[1]>=(attacktime[1]+1)*200){
-            	  randblank = ran.nextInt(Main.rowSize);
-                  up=(score[1]-attacktime[1]*200)/200;
-                  attacktime[1]+=up;
-                  System.out.println(up);
-                  demap(0);
-                  
-                     for(int i=0;i<Main.colSize-up;i++){
-                      for(int j=0;j<Main.rowSize;j++){	
-                       Main.player[0][j][i]=Main.player[0][j][i+up];
-                      }			  
-                     }
+		Random ran = new Random();
+		int randblank;
+		int up = 0;
+		if (num == 0) {
+			// player1 attack player2
+			if (score[0] >= (attacktime[0] + 1) * 200) {
+				randblank = ran.nextInt(Main.rowSize);
+				up = (score[0] - attacktime[0] * 200) / 200;
+				attacktime[0] += up;
 
-                     
-                     for(int k=1;k<=up;k++){
-                      for(int i=0;i<Main.rowSize;i++){
-                    	  if(i==randblank){Main.player[0][i][Main.colSize-k]=0;continue;}	  
-                          Main.player[0][i][Main.colSize-k]=100;
-                      }
-                     }
-                     map(0,Main.current1);
-                }	
-       }
-	}	
-	
+				demap(1);
+				for (int i = 0; i < Main.colSize - up; i++) {
+					for (int j = 0; j < Main.rowSize; j++) {
+						Main.player[1][j][i] = Main.player[1][j][i + up];
+					}
+				}
+
+				for (int k = 1; k <= up; k++) {
+					for (int i = 0; i < Main.rowSize; i++) {
+						if (i == randblank) {
+							Main.player[1][i][Main.colSize - k] = 0;
+							continue;
+						}
+						Main.player[1][i][Main.colSize - k] = 100;
+					}
+				}
+				map(1, Main.current2);
+			}
+		} else {
+			// player2 attack player1
+			if (score[1] >= (attacktime[1] + 1) * 200) {
+				randblank = ran.nextInt(Main.rowSize);
+				up = (score[1] - attacktime[1] * 200) / 200;
+				attacktime[1] += up;
+				demap(0);
+
+				for (int i = 0; i < Main.colSize - up; i++) {
+					for (int j = 0; j < Main.rowSize; j++) {
+						Main.player[0][j][i] = Main.player[0][j][i + up];
+					}
+				}
+
+				for (int k = 1; k <= up; k++) {
+					for (int i = 0; i < Main.rowSize; i++) {
+						if (i == randblank) {
+							Main.player[0][i][Main.colSize - k] = 0;
+							continue;
+						}
+						Main.player[0][i][Main.colSize - k] = 100;
+					}
+				}
+				map(0, Main.current1);
+			}
+		}
+	}
+
 	public static void map(int num, int shape) {
 		player[num][Main.x[num][0]][Main.y[num][0]] = shape;
 		player[num][Main.x[num][1]][Main.y[num][1]] = shape;

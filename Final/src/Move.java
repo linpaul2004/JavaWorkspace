@@ -108,19 +108,21 @@ public class Move implements KeyListener {
 			for (int i = 0; i < 4; i++) {
 				Main.y[0][i] += tmp;
 			}
-			
+
 			Main.map(0, Main.current1);
-			Main.clear();
+			// Main.clear();
 			Main.attack(0);
 			Main.setIcon(0);
 			break;
 
 		case KeyEvent.VK_S:
 			now1 = System.currentTimeMillis();
-			if (blk.bottomBlock(0) == true) break;
-			if (blk.fallBlock(0) == true) break;
-			if(now1-before1 > speed){
-				
+			if (blk.bottomBlock(0) == true)
+				break;
+			if (blk.fallBlock(0) == true)
+				break;
+			if (now1 - before1 > speed) {
+
 				Main.demap(0);
 				Main.y[0][0]++;
 				Main.y[0][1]++;
@@ -133,7 +135,8 @@ public class Move implements KeyListener {
 			break;
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		case KeyEvent.VK_LEFT:
-			if(Main.mod.equals("battle") == false) break;
+			if (Main.mod.equals("battle") == false)
+				break;
 			if (blk.leftBlock(1) == true)
 				break;
 
@@ -158,7 +161,8 @@ public class Move implements KeyListener {
 			break;
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		case KeyEvent.VK_RIGHT:
-			if(Main.mod.equals("battle") == false) break;
+			if (Main.mod.equals("battle") == false)
+				break;
 			if (blk.rightBlock(1) == true)
 				break;
 
@@ -184,7 +188,8 @@ public class Move implements KeyListener {
 
 		/////////////////////////////////////////////////////////////////////
 		case KeyEvent.VK_ENTER:
-			if(Main.mod.equals("battle") == false) break;
+			if (Main.mod.equals("battle") == false)
+				break;
 			if (blk.fallBlock(1)) {
 				break;
 			}
@@ -227,20 +232,23 @@ public class Move implements KeyListener {
 			for (int i = 0; i < 4; i++) {
 				Main.y[1][i] += tmp;
 			}
-			
+
 			Main.map(1, Main.current2);
-			Main.clear();
+			// Main.clear();
 			Main.attack(1);
 			Main.setIcon(1);
 			break;
-			
+
 		case KeyEvent.VK_DOWN:
-			if(Main.mod.equals("battle") == false) break;
+			if (Main.mod.equals("battle") == false)
+				break;
 			now2 = System.currentTimeMillis();
-			if (blk.bottomBlock(1) == true) break;
-			if (blk.fallBlock(1) == true) break;
-			if(now2-before2 > speed){
-				
+			if (blk.bottomBlock(1) == true)
+				break;
+			if (blk.fallBlock(1) == true)
+				break;
+			if (now2 - before2 > speed) {
+
 				Main.demap(1);
 				Main.y[1][0]++;
 				Main.y[1][1]++;
