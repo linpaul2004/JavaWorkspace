@@ -9,7 +9,7 @@ import javax.swing.JTextArea;
 
 public class Main {
 	static final int rowSize = 10;
-	static final int colSize = 20;
+	static final int colSize = 22;
 	static int[][][] player = new int[2][rowSize][colSize];
 	static JLabel[][][] lb = new JLabel[2][rowSize][colSize];
 	static JLabel[][][] next = new JLabel[2][4][3];
@@ -26,6 +26,7 @@ public class Main {
 	static ImageIcon iconbrick = new ImageIcon("brick.png");
 	static boolean attack0, attack1;
 	static int[] attacktime = new int[2];
+	static boolean isClear = false;
 	////////////
 
 	static int[][] x = new int[2][4];
@@ -51,6 +52,7 @@ public class Main {
 
 		//////////////////////////////////////////////////////
 		while (mod.equals("battle") == false && mod.equals("single") == false) {
+			System.out.println("");
 			frame.gameStart.setVisible(false);
 			try {
 				Thread.sleep(500);
@@ -100,7 +102,7 @@ public class Main {
 		}
 
 		for (int i = 0; i < rowSize; i++) {
-			for (int j = 0; j < colSize; j++) {
+			for (int j = 2; j < colSize; j++) {
 				lb[0][i][j] = new JLabel();
 				lb[0][i][j].setIcon(icon);
 				lb[0][i][j].setLocation(41 * (i + 1), 41 * (j - 2));
@@ -114,7 +116,6 @@ public class Main {
 					lb[1][i][j].setSize(40, 40);
 					frame.add(lb[1][i][j]);
 				}
-
 			}
 		}
 
@@ -133,15 +134,16 @@ public class Main {
 					next[1][i][j].setSize(40, 40);
 					frame.add(next[1][i][j]);
 				}
-
 			}
 		}
 		frame.repaint();
 
 		while (mod.equals("battle") == true) {
+			System.out.println("");
 			frame.setSize(1400, 870);
-			if (startSignal == false)
+			if (startSignal == false) {
 				continue;
+			}
 
 			randNext1 = ran.nextInt(7) + 1;
 			randNext2 = ran.nextInt(7) + 1;
@@ -204,14 +206,19 @@ public class Main {
 
 			////////////////////////////////////////////////////////////////////////
 			while (loser == -1) {
-				loser = isOver();
+				System.out.print("");
 				if (Tetris.fall() == 0) {
-					clear();
-					rot.rotation1 = 0;
+					if (isClear == false) {
+						clear(0);
+					}
+					attack(0);
+					loser = isOver();
+					Rotate.rotation1 = 0;
 					rand1 = randNext1;
 					current1 = rand1;
 					randNext1 = ran.nextInt(7) + 1;
 					setNext(0, randNext1);
+					isClear = false;
 					switch (rand1) {
 					case 1:
 						new TShape(0);
@@ -238,7 +245,10 @@ public class Main {
 
 					Tetris.fall();
 				} else {
-					clear();
+					if (isClear == false) {
+						clear(1);
+					}
+					loser = isOver();
 					//
 					attack(1);
 					/////
@@ -246,7 +256,8 @@ public class Main {
 					current2 = rand2;
 					randNext2 = ran.nextInt(7) + 1;
 					setNext(1, randNext2);
-					rot.rotation2 = 0;
+					Rotate.rotation2 = 0;
+					isClear = false;
 					switch (rand2) {
 					case 1:
 						new TShape(1);
@@ -289,9 +300,11 @@ public class Main {
 
 		///////////////////////////////// single
 		while (mod.equals("single") == true) {
+			System.out.println("");
 			frame.setSize(700, 870);
-			if (startSignal == false)
+			if (startSignal == false) {
 				continue;
+			}
 			randNext1 = ran.nextInt(7) + 1;
 			rand1 = ran.nextInt(7) + 1;
 			current1 = rand1;
@@ -325,17 +338,17 @@ public class Main {
 
 			////////////////////////////////////////////////////////////////////////
 			while (loser == -1) {
-				loser = isOver();
 				if (Tetris.fall() == 0) {
-					clear();
-					//
-					attack(0);
-					/////
-					rot.rotation1 = 0;
+					if (isClear == false) {
+						clear(0);
+					}
+					loser = isOver();
+					Rotate.rotation1 = 0;
 					rand1 = randNext1;
 					current1 = rand1;
 					randNext1 = ran.nextInt(7) + 1;
 					setNext(0, randNext1);
+					isClear = false;
 					switch (rand1) {
 					case 1:
 						new TShape(0);
@@ -380,16 +393,19 @@ public class Main {
 	public static void resetGame() {
 		loser = -1;
 		score[0] = score[1] = 0;
+		scoreLabel[0].setText("Score:\n" + score[0]);
+		if (mod.equals("battle") == true) {
+			scoreLabel[1].setText("Score:\n" + score[1]);
+		}
 		//////////
 		attacktime[0] = attacktime[1] = 0;
 		//////////
 
 		Tetris.speed = 1;
 		startSignal = false;
-		;
 		for (int i = 0; i < 2; i++) {
-			for (int j = 0; j < 10; j++) {
-				for (int k = 0; k < 20; k++) {
+			for (int j = 0; j < rowSize; j++) {
+				for (int k = 0; k < colSize; k++) {
 					player[i][j][k] = 0;
 				}
 			}
@@ -408,7 +424,7 @@ public class Main {
 
 	public static void setIcon(int num) {
 		for (int i = 0; i < rowSize; i++) {
-			for (int j = 0; j < colSize; j++) {
+			for (int j = 2; j < colSize; j++) {
 
 				switch (player[num][i][j]) {
 				case 1:
@@ -445,7 +461,7 @@ public class Main {
 
 	public static int isOver() {
 		int over = 1;
-		for (int col = 2; col < colSize; col++) {
+		for (int col = 0; col < colSize; col++) {
 			for (int row = 0; row < rowSize; row++) {
 				if (player[0][row][col] != 0) {
 					break;
@@ -461,7 +477,7 @@ public class Main {
 
 		if (mod.equals("battle") == true) {
 			over = 1;
-			for (int col = 2; col < colSize; col++) {
+			for (int col = 0; col < colSize; col++) {
 				for (int row = 0; row < rowSize; row++) {
 					if (player[1][row][col] != 0) {
 						break;
@@ -478,41 +494,33 @@ public class Main {
 		return -1;
 	}
 
-	public static void clear() {
+	public static void clear(int num) {
 		boolean needClear;
-		int mod;
-		if (Main.mod.equals("battle") == true)
-			mod = 2;
-		else {
-			mod = 1;
+		int add = 50;
+		for (int i = Main.colSize - 1; i >= 0; i--) {
+			needClear = true;
+			for (int j = 0; j < Main.rowSize; j++) {
+				if (Main.player[num][j][i] == 0) {
+					needClear = false;
+					break;
+				}
+			}
+			if (needClear) {
+				for (int ii = i; ii >= 1; ii--) {
+					for (int jj = 0; jj < Main.rowSize; jj++) {
+						Main.player[num][jj][ii] = Main.player[num][jj][ii - 1];
+					}
+				}
+				i++;
+				add *= 2;
+			}
 		}
-		for (int k = 0; k < mod; k++) {
-			int add = 50;
-			for (int i = Main.colSize - 1; i >= 0; i--) {
-				needClear = true;
-				for (int j = 0; j < Main.rowSize; j++) {
-					if (Main.player[k][j][i] == 0) {
-						needClear = false;
-						break;
-					}
-				}
-				if (needClear) {
-					for (int ii = i; ii >= 1; ii--) {
-						for (int jj = 0; jj < Main.rowSize; jj++) {
-							Main.player[k][jj][ii] = Main.player[k][jj][ii - 1];
-						}
-					}
-					i++;
-					add *= 2;
-				}
-			}
-			if (add == 50) {
-				add = 0;
-			}
-			score[k] += add;
-			scoreLabel[k].setText("Score:\n" + score[k]);
+		if (add == 50) {
+			add = 0;
+		}
+		score[num] += add;
+		scoreLabel[num].setText("Score:\n" + score[num]);
 
-		}
 	}
 
 	//
@@ -521,6 +529,10 @@ public class Main {
 		Random ran = new Random();
 		int randblank;
 		int up = 0;
+		int tmp = 0;
+
+		boolean isEmpty = true;
+		Block blk = new Block();
 		if (num == 0) {
 			// player1 attack player2
 			if (score[0] >= (attacktime[0] + 1) * 200) {
@@ -529,12 +541,29 @@ public class Main {
 				attacktime[0] += up;
 
 				demap(1);
+				isEmpty = true;
+				tmp = 0;
+				for (int i = 0; i < 4; i++) {
+					tmp = Main.y[1][i] + up;
+					if (Main.player[1][Main.x[1][i]][tmp] > 0) {
+						isEmpty = false;
+					}
+				}
+
+				if (isEmpty == false) {
+					while (blk.fallBlock(1) == false) {
+						for (int i = 0; i < 4; i++) {
+							Main.y[1][i]++;
+						}
+					}
+					map(1, Main.current2);
+				}
+				// up
 				for (int i = 0; i < Main.colSize - up; i++) {
 					for (int j = 0; j < Main.rowSize; j++) {
 						Main.player[1][j][i] = Main.player[1][j][i + up];
 					}
 				}
-
 				for (int k = 1; k <= up; k++) {
 					for (int i = 0; i < Main.rowSize; i++) {
 						if (i == randblank) {
@@ -544,16 +573,39 @@ public class Main {
 						Main.player[1][i][Main.colSize - k] = 100;
 					}
 				}
-				map(1, Main.current2);
+				///////
+				if (isEmpty == true)
+					map(1, Main.current2);
 			}
+
 		} else {
 			// player2 attack player1
 			if (score[1] >= (attacktime[1] + 1) * 200) {
 				randblank = ran.nextInt(Main.rowSize);
 				up = (score[1] - attacktime[1] * 200) / 200;
 				attacktime[1] += up;
+				System.out.println(up);
 				demap(0);
 
+				isEmpty = true;
+				tmp = 0;
+				for (int i = 0; i < 4; i++) {
+					tmp = Main.y[0][i] + up;
+					if (Main.player[0][Main.x[0][i]][tmp] > 0) {
+						isEmpty = false;
+					}
+				}
+
+				if (isEmpty == false) {
+					while (blk.fallBlock(0) == false) {
+						for (int i = 0; i < 4; i++) {
+							Main.y[0][i]++;
+						}
+					}
+					map(0, Main.current1);
+				}
+
+				//
 				for (int i = 0; i < Main.colSize - up; i++) {
 					for (int j = 0; j < Main.rowSize; j++) {
 						Main.player[0][j][i] = Main.player[0][j][i + up];
@@ -569,8 +621,11 @@ public class Main {
 						Main.player[0][i][Main.colSize - k] = 100;
 					}
 				}
-				map(0, Main.current1);
+				//
+				if (isEmpty == true)
+					map(0, Main.current1);
 			}
+
 		}
 	}
 

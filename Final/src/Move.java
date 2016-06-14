@@ -18,6 +18,8 @@ public class Move implements KeyListener {
 		case KeyEvent.VK_A:
 			if (blk.leftBlock(0) == true)
 				break;
+			if (blk.bottomBlock(0) == true || blk.fallBlock(0) == true)
+				break;
 
 			if (Main.x[0][0] - 1 < 0)
 				break;
@@ -41,6 +43,8 @@ public class Move implements KeyListener {
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		case KeyEvent.VK_D:
 			if (blk.rightBlock(0) == true)
+				break;
+			if (blk.bottomBlock(0) == true || blk.fallBlock(0) == true)
 				break;
 
 			if (Main.x[0][0] + 1 > Main.rowSize - 1)
@@ -72,6 +76,7 @@ public class Move implements KeyListener {
 			if (blk.bottomBlock(0)) {
 				break;
 			}
+
 			int tmp = Main.colSize;
 			boolean downtobottom = true;
 			boolean findstop = false;
@@ -110,8 +115,10 @@ public class Move implements KeyListener {
 			}
 
 			Main.map(0, Main.current1);
-			// Main.clear();
-			Main.attack(0);
+			Main.clear(0);
+			Main.isClear = true;
+			if (Main.mod.equals("battle") == true)
+				Main.attack(0);
 			Main.setIcon(0);
 			break;
 
@@ -139,6 +146,8 @@ public class Move implements KeyListener {
 				break;
 			if (blk.leftBlock(1) == true)
 				break;
+			if (blk.bottomBlock(1) == true || blk.fallBlock(1) == true)
+				break;
 
 			if (Main.x[1][0] - 1 < 0)
 				break;
@@ -164,6 +173,8 @@ public class Move implements KeyListener {
 			if (Main.mod.equals("battle") == false)
 				break;
 			if (blk.rightBlock(1) == true)
+				break;
+			if (blk.bottomBlock(1) == true || blk.fallBlock(1) == true)
 				break;
 
 			if (Main.x[1][0] + 1 > Main.rowSize - 1)
@@ -216,6 +227,7 @@ public class Move implements KeyListener {
 							} // if==1,second search
 							downtobottom = true;
 						} // for k
+
 						if (downtobottom) {
 							if (tmp > Main.colSize - Main.y[1][i] - 1) {
 								tmp = Main.colSize - Main.y[1][i] - 1;
@@ -223,9 +235,8 @@ public class Move implements KeyListener {
 						}
 					} // if==0,first search
 				} // for j
-				if (!findstop) {
+				if (!findstop)
 					break;
-				}
 			} // for i
 
 			Main.demap(1);
@@ -234,8 +245,9 @@ public class Move implements KeyListener {
 			}
 
 			Main.map(1, Main.current2);
-			// Main.clear();
-			Main.attack(1);
+			Main.clear(1);
+			if (Main.mod.equals("battle") == true)
+				Main.attack(1);
 			Main.setIcon(1);
 			break;
 
@@ -260,6 +272,7 @@ public class Move implements KeyListener {
 			}
 			break;
 		default:
+			break;
 
 		}
 	}
