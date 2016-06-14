@@ -17,8 +17,12 @@ public class ButtonControl implements ActionListener {
 			Main.mod = "single";
 		} else if (e.getActionCommand().equals("Start")) {
 			Main.startSignal = true;
+			Main.loser = -1;
+			Main.pause = false;
 			Main.frame.gameStart.setText("Abort");
 			Main.frame.gameStart.setSize(Main.frame.gameStart.getPreferredSize());
+			Main.frame.pause.setText("Pause");
+			Main.frame.pause.setSize(Main.frame.pause.getPreferredSize());
 		} else if (e.getActionCommand().equals("Rank")) {
 			// JOptionPane.showMessageDialog(null, Main.setHighScore);
 			HighScore.readScore();

@@ -51,7 +51,7 @@ public class Component extends JFrame {
 
 		title.setIcon(iconTitle);
 		title.setSize(title.getPreferredSize());
-		title.setLocation(getSize().width / 2 - title.getSize().width / 2, 300);
+		title.setLocation(getSize().width / 2 - title.getSize().width / 2, -200);
 		add(gameStart);
 		add(rank);
 		add(single);
@@ -67,7 +67,16 @@ public class Component extends JFrame {
 		single.setFocusable(false);
 		battle.setFocusable(false);
 		pause.setFocusable(false);
-
+		for(int i = -200; i<300; i++)
+		{
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			title.setLocation(getSize().width / 2 - title.getSize().width / 2, i);
+		}
 	}
 
 	public void setting() {

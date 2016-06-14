@@ -286,6 +286,7 @@ public class Main {
 					Tetris.fall();
 				}
 			}
+			frame.gameStart.setText("Start");
 			if (loser >= 0) {
 				frame.showLose.setLocation(50 + loser * 720, 100);
 				frame.showLose.setVisible(true);
@@ -375,10 +376,11 @@ public class Main {
 					Tetris.fall();
 				}
 			}
+			frame.gameStart.setText("Start");
 			if (loser >= 0) {
 				frame.showLose.setLocation(50 + loser * 720, 100);
 				frame.showLose.setVisible(true);
-				HighScore.setHighscore(score[1 - loser], loser);
+				HighScore.setHighscore(score[0], loser);
 				highscore.setLocationRelativeTo(frame);
 				highscore.setVisible(true);
 			}
@@ -493,7 +495,7 @@ public class Main {
 
 	public static void clear(int num) {
 		boolean needClear;
-		int add = 50;
+		int add = 0;
 		for (int i = Main.colSize - 1; i >= 0; i--) {
 			needClear = true;
 			for (int j = 0; j < Main.rowSize; j++) {
@@ -509,13 +511,10 @@ public class Main {
 					}
 				}
 				i++;
-				add *= 2;
+				add++;
 			}
 		}
-		if (add == 50) {
-			add = 0;
-		}
-		score[num] += add;
+		score[num] += 100 * ((add * (add + 1)) / 2);
 		scoreLabel[num].setText("Score:\n" + score[num]);
 
 	}
