@@ -2,13 +2,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class Move implements KeyListener {
+	long now1 = 0;
+	long now2 = 0;
+	long before1 = 0;
+	long before2 = 0;
+	int speed = 50;
 
 	public void keyPressed(KeyEvent e) {
 		Block blk = new Block();
-		// if (blk.bottomBlock() == true)
-		// return;
-		// if (blk.fallBlock() == true)
-		// return;
 
 		int key1 = e.getKeyCode();
 
@@ -68,6 +69,9 @@ public class Move implements KeyListener {
 			if (blk.fallBlock(0)) {
 				break;
 			}
+			if (blk.bottomBlock(0)) {
+				break;
+			}
 			int tmp = Main.colSize;
 			boolean downtobottom = true;
 			boolean findstop = false;
@@ -104,16 +108,32 @@ public class Move implements KeyListener {
 			for (int i = 0; i < 4; i++) {
 				Main.y[0][i] += tmp;
 			}
-			Main.clear();
+			
 			Main.map(0, Main.current1);
+			Main.clear();
+			Main.attack(0);
 			Main.setIcon(0);
 			break;
 
 		case KeyEvent.VK_S:
-			Tetris.speed = 10;
+			now1 = System.currentTimeMillis();
+			if (blk.bottomBlock(0) == true) break;
+			if (blk.fallBlock(0) == true) break;
+			if(now1-before1 > speed){
+				
+				Main.demap(0);
+				Main.y[0][0]++;
+				Main.y[0][1]++;
+				Main.y[0][2]++;
+				Main.y[0][3]++;
+				Main.map(0, Main.current1);
+				Main.setIcon(0);
+				before1 = now1;
+			}
 			break;
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		case KeyEvent.VK_LEFT:
+			if(Main.mod.equals("battle") == false) break;
 			if (blk.leftBlock(1) == true)
 				break;
 
@@ -138,6 +158,7 @@ public class Move implements KeyListener {
 			break;
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		case KeyEvent.VK_RIGHT:
+			if(Main.mod.equals("battle") == false) break;
 			if (blk.rightBlock(1) == true)
 				break;
 
@@ -163,7 +184,11 @@ public class Move implements KeyListener {
 
 		/////////////////////////////////////////////////////////////////////
 		case KeyEvent.VK_ENTER:
+			if(Main.mod.equals("battle") == false) break;
 			if (blk.fallBlock(1)) {
+				break;
+			}
+			if (blk.bottomBlock(1)) {
 				break;
 			}
 			tmp = Main.colSize;
@@ -202,9 +227,29 @@ public class Move implements KeyListener {
 			for (int i = 0; i < 4; i++) {
 				Main.y[1][i] += tmp;
 			}
-			Main.clear();
+			
 			Main.map(1, Main.current2);
+			Main.clear();
+			Main.attack(1);
 			Main.setIcon(1);
+			break;
+			
+		case KeyEvent.VK_DOWN:
+			if(Main.mod.equals("battle") == false) break;
+			now2 = System.currentTimeMillis();
+			if (blk.bottomBlock(1) == true) break;
+			if (blk.fallBlock(1) == true) break;
+			if(now2-before2 > speed){
+				
+				Main.demap(1);
+				Main.y[1][0]++;
+				Main.y[1][1]++;
+				Main.y[1][2]++;
+				Main.y[1][3]++;
+				Main.map(1, Main.current2);
+				Main.setIcon(1);
+				before2 = now2;
+			}
 			break;
 		default:
 

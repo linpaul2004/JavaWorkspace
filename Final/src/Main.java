@@ -9,10 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Random;
 import java.util.Scanner;
-
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
@@ -23,58 +20,50 @@ public class Main {
 	static int[][][] player = new int[2][rowSize][colSize];
 	static JLabel[][][] lb = new JLabel[2][rowSize][colSize];
 	static JLabel[][][] next = new JLabel[2][4][3];
-	static JLabel showLose = new JLabel();
-	static JLabel title = new JLabel();
 	static JTextArea[] scoreLabel = new JTextArea[2];
-	static JButton startButton = new JButton();
-	static ImageIcon icon = new ImageIcon("t1.png");
-	static ImageIcon icon1 = new ImageIcon("t.png");
+	static ImageIcon icon = new ImageIcon("t.png");
+	static ImageIcon icon1 = new ImageIcon("t1.png");
 	static ImageIcon icon2 = new ImageIcon("t2.png");
 	static ImageIcon icon3 = new ImageIcon("t3.png");
 	static ImageIcon icon4 = new ImageIcon("t4.png");
 	static ImageIcon icon5 = new ImageIcon("t5.png");
 	static ImageIcon icon6 = new ImageIcon("t6.png");
 	static ImageIcon icon7 = new ImageIcon("t7.png");
-	static ImageIcon iconLose = new ImageIcon("lose.jpg");
-	static ImageIcon iconTitle = new ImageIcon("title.jpg");
+   //attack
+	static ImageIcon iconbrick = new ImageIcon("brick.png");
+	static boolean attack0,attack1;  
+	static int[] attacktime=new int[2];
+   ////////////	
+	
 	static int[][] x = new int[2][4];
 	static int[][] y = new int[2][4];
 	static int[] score = new int[2];
 	static int loser;
 	static int current1, current2;
-	static boolean start;
-
+	static boolean startSignal = false;
+	static String mod = "";
+	
+	
+	
 	public static void main(String[] args) {
 		int rand1;
 		int rand2;
 		int randNext1;
 		int randNext2;
+		Component frame = new Component();
 		Random ran = new Random();
 		Move mov = new Move();
 		Rotate rot = new Rotate();
-		JFrame frame = new JFrame();
-		start = false;
-		frame.setSize(1400, 870);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.addKeyListener(mov);
 		frame.addKeyListener(rot);
-		frame.add(showLose);
-		frame.add(title);
-		frame.add(startButton);
-		showLose.setIcon(iconLose);
-		showLose.setSize(showLose.getPreferredSize());
-		showLose.setVisible(false);
-		title.setIcon(iconTitle);
-		title.setSize(title.getPreferredSize());
-		title.setLocation(frame.getSize().width / 2 - title.getSize().width / 2, 300);
-		startButton.setText("Start Game");
-		startButton.setSize(startButton.getPreferredSize());
-		startButton.setLocation(frame.getSize().width / 2 - startButton.getSize().width / 2, 550);
-		startButton.addActionListener(new ButtonControl());
+		Main m = new Main();
+		
+		//////////////////////////////////////////////////////
 		frame.setLayout(null);
 		frame.setVisible(true);
-		startButton.setFocusable(false);
-		while (start == false) {
+		while (mod.equals("battle") == false && mod.equals("single") == false) {
+			System.out.println("");
+			frame.gameStart.setVisible(false);
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
@@ -82,8 +71,8 @@ public class Main {
 				e.printStackTrace();
 			}
 		}
-		title.setVisible(false);
-		startButton.setVisible(false);
+		
+		frame.setting();
 
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 10; j++) {
@@ -92,42 +81,51 @@ public class Main {
 				}
 			}
 		}
-
+		
 		score[0] = score[1] = 0;
 		loser = -1;
+		/////
+		attacktime[0]=attacktime[1]=0;
+		////
 		scoreLabel[0] = new JTextArea();
-		scoreLabel[1] = new JTextArea();
 		scoreLabel[0].setBackground(SystemColor.control);
-		scoreLabel[1].setBackground(SystemColor.control);
 		scoreLabel[0].setEditable(false);
-		scoreLabel[1].setEditable(false);
 		scoreLabel[0].setFont(new Font(scoreLabel[0].getFont().getName(), scoreLabel[0].getFont().getStyle(), 40));
-		scoreLabel[1].setFont(new Font(scoreLabel[1].getFont().getName(), scoreLabel[1].getFont().getStyle(), 40));
 		scoreLabel[0].setText("Score:\n" + score[0]);
 		scoreLabel[0].setSize(scoreLabel[0].getPreferredSize());
 		scoreLabel[0].setLocation(500, 400);
 		frame.add(scoreLabel[0]);
-		scoreLabel[1].setText("Score:\n" + score[1]);
-		scoreLabel[1].setSize(scoreLabel[1].getPreferredSize());
-		scoreLabel[1].setLocation(1200, 400);
-		frame.add(scoreLabel[1]);
 		scoreLabel[0].setFocusable(false);
-		scoreLabel[1].setFocusable(false);
-
+		
+		if(mod.equals("battle") == true){
+			scoreLabel[1] = new JTextArea();
+			scoreLabel[1].setBackground(SystemColor.control);
+			scoreLabel[1].setEditable(false);
+			scoreLabel[1].setFont(new Font(scoreLabel[1].getFont().getName(), scoreLabel[1].getFont().getStyle(), 40));
+			scoreLabel[1].setText("Score:\n" + score[1]);
+			scoreLabel[1].setSize(scoreLabel[1].getPreferredSize());
+			scoreLabel[1].setLocation(1200, 400);
+			frame.add(scoreLabel[1]);
+			scoreLabel[1].setFocusable(false);
+		}
+		
 		for (int i = 0; i < rowSize; i++) {
 			for (int j = 0; j < colSize; j++) {
 				lb[0][i][j] = new JLabel();
 				lb[0][i][j].setIcon(icon);
-				lb[0][i][j].setLocation(41 * (i + 1), 41 * (j - 2));
+				lb[0][i][j].setLocation(41 * (i + 1), 41 * (j - 0));
 				lb[0][i][j].setSize(40, 40);
-
-				lb[1][i][j] = new JLabel();
-				lb[1][i][j].setIcon(icon);
-				lb[1][i][j].setLocation(41 * (i + 1) + 700, 41 * (j - 2));
-				lb[1][i][j].setSize(40, 40);
-
 				frame.add(lb[0][i][j]);
-				frame.add(lb[1][i][j]);
+				
+				if(mod.equals("battle") == true){
+					lb[1][i][j] = new JLabel();
+					lb[1][i][j].setIcon(icon);
+					lb[1][i][j].setLocation(41 * (i + 1) + 700, 41 * (j - 0));
+					lb[1][i][j].setSize(40, 40);
+					frame.add(lb[1][i][j]);
+				}
+				
+				
 			}
 		}
 
@@ -137,19 +135,26 @@ public class Main {
 				next[0][i][j].setIcon(icon);
 				next[0][i][j].setLocation(41 * (i + 1) + 450, 41 * (j) + 150);
 				next[0][i][j].setSize(40, 40);
-
-				next[1][i][j] = new JLabel();
-				next[1][i][j].setIcon(icon);
-				next[1][i][j].setLocation(41 * (i + 1) + 1150, 41 * (j) + 150);
-				next[1][i][j].setSize(40, 40);
-
 				frame.add(next[0][i][j]);
-				frame.add(next[1][i][j]);
+				
+				if(mod.equals("battle") == true){
+					next[1][i][j] = new JLabel();
+					next[1][i][j].setIcon(icon);
+					next[1][i][j].setLocation(41 * (i + 1) + 1150, 41 * (j) + 150);
+					next[1][i][j].setSize(40, 40);
+					frame.add(next[1][i][j]);
+				}
+				
+				
 			}
 		}
 		frame.repaint();
 
-		while (true) {
+		while (mod.equals("battle") == true) {
+			System.out.println("");
+			frame.setSize(1400, 870);
+			if(startSignal == false) continue;
+			
 			randNext1 = ran.nextInt(7) + 1;
 			randNext2 = ran.nextInt(7) + 1;
 			rand1 = ran.nextInt(7) + 1;
@@ -211,7 +216,7 @@ public class Main {
 
 			////////////////////////////////////////////////////////////////////////
 			while (loser == -1) {
-				loser = isOver();
+				loser = m.isOver();
 				if (Tetris.fall() == 0) {
 					clear();
 					Rotate.rotation1 = 0;
@@ -246,6 +251,9 @@ public class Main {
 					Tetris.fall();
 				} else {
 					clear();
+					//
+					attack(1);
+					/////
 					rand2 = randNext2;
 					current2 = rand2;
 					randNext2 = ran.nextInt(7) + 1;
@@ -280,13 +288,105 @@ public class Main {
 			}
 			frame.removeKeyListener(rot);
 			frame.removeKeyListener(mov);
-			showLose.setLocation(50 + loser * 720, 100);
-			showLose.setVisible(true);
+			frame.showLose.setLocation(50 + loser * 720, 100);
+			frame.showLose.setVisible(true);
 			String message = "Player " + (loser == 0 ? 2 : 1) + " wins!" + "\nScore:" + score[1 - loser];
 			message += "\nHigh Score:\n";
-			message += (setHighscore(score[1 - loser], loser));
+			message += (m.setHighscore(score[1 - loser], loser));
 			JOptionPane.showMessageDialog(null, message);
 			resetGame();
+			frame.addKeyListener(rot);
+			frame.addKeyListener(mov);
+		}
+		
+		/////////////////////////////////single
+		while (mod.equals("single") == true) {
+			frame.setSize(700, 870);
+			System.out.println("");
+			if(startSignal == false) continue;
+			randNext1 = ran.nextInt(7) + 1;
+			rand1 = ran.nextInt(7) + 1;
+			current1 = rand1;
+			setNext(0, randNext1);
+
+			switch (rand1) {
+			case 1:
+				new TShape(0);
+				break;
+			case 2:
+				new Square(0);
+				break;
+			case 3:
+				new Line(0);
+				break;
+			case 4:
+				new LeftL(0);
+				break;
+			case 5:
+				new LeftZ(0);
+				break;
+			case 6:
+				new RightL(0);
+				break;
+			case 7:
+				new RightZ(0);
+				break;
+			}
+
+			
+			Tetris.fall();
+
+			////////////////////////////////////////////////////////////////////////
+			while (loser == -1) {
+				loser = m.isOver();
+				if (Tetris.fall() == 0) {
+					clear();
+					//
+					attack(0);
+					/////
+					Rotate.rotation1 = 0;
+					rand1 = randNext1;
+					current1 = rand1;
+					randNext1 = ran.nextInt(7) + 1;
+					setNext(0, randNext1);
+					switch (rand1) {
+					case 1:
+						new TShape(0);
+						break;
+					case 2:
+						new Square(0);
+						break;
+					case 3:
+						new Line(0);
+						break;
+					case 4:
+						new LeftL(0);
+						break;
+					case 5:
+						new LeftZ(0);
+						break;
+					case 6:
+						new RightL(0);
+						break;
+					case 7:
+						new RightZ(0);
+						break;
+					}
+
+					Tetris.fall();
+				} 
+			}
+			frame.removeKeyListener(rot);
+			frame.removeKeyListener(mov);
+        	frame.showLose.setLocation(50 + loser * 720, 100);
+			frame.showLose.setVisible(true);
+			String message = "";
+			//String message = "Player " + (loser == 0 ? 2 : 1) + " wins!" + "\nScore:" + score[1 - loser];
+			message += "\nHigh Score:\n";
+			message += (m.setHighscore(score[1 - loser], loser));
+			JOptionPane.showMessageDialog(null, message);
+			resetGame();
+	    	frame.showLose.setVisible(false);
 			frame.addKeyListener(rot);
 			frame.addKeyListener(mov);
 		}
@@ -295,8 +395,11 @@ public class Main {
 	public static void resetGame() {
 		loser = -1;
 		score[0] = score[1] = 0;
+	    //////////
+		attacktime[0]=attacktime[1]=0;
+		//////////
 		Tetris.speed = 1;
-		showLose.setVisible(false);
+		startSignal = false;;
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 10; j++) {
 				for (int k = 0; k < 20; k++) {
@@ -311,15 +414,13 @@ public class Main {
 			}
 		}
 		setIcon(0);
-		setIcon(1);
+		if(Main.mod.equals("battle") == true) setIcon(1);
 	}
 
 	public static void setIcon(int num) {
 		for (int i = 0; i < rowSize; i++) {
 			for (int j = 0; j < colSize; j++) {
-				// if (player[num][i][j] == 1) {
-				// lb[num][i][j].setIcon(icon1);
-				// }
+			
 				switch (player[num][i][j]) {
 				case 1:
 					lb[num][i][j].setIcon(icon1);
@@ -345,16 +446,15 @@ public class Main {
 				case 0:
 					lb[num][i][j].setIcon(icon);
 					break;
-
+				case 100:
+					lb[num][i][j].setIcon(iconbrick);
+					break;
 				}
-				// if (player[num][i][j] == 0) {
-				// lb[num][i][j].setIcon(icon);
-				// }
 			}
 		}
 	}
 
-	public static String setHighscore(int score, int loser) {
+	public String setHighscore(int score, int loser) {
 		File fileHigh = new File("highscore.txt");
 		int winner = loser == 0 ? 2 : 1;
 		String output = "";
@@ -409,9 +509,47 @@ public class Main {
 		return realOutput;
 	}
 
+	public int isOver() {
+		int over = 1;
+		for (int col = 2; col < colSize; col++) {
+			for (int row = 0; row < rowSize; row++) {
+				if (player[0][row][col] != 0) {
+					break;
+				}
+				if (row == rowSize - 1) {
+					over = 0;
+				}
+			}
+		}
+		if (over == 1) {
+			return 0;
+		}
+		
+		if(mod.equals("battle") == true){
+			over = 1;
+			for (int col = 2; col < colSize; col++) {
+				for (int row = 0; row < rowSize; row++) {
+					if (player[1][row][col] != 0) {
+						break;
+					}
+					if (row == rowSize - 1) {
+						over = 0;
+					}
+				}
+			}
+			if (over == 1) {
+				return 1;
+			}
+		}
+		return -1;
+	}
+	
 	public static void clear() {
 		boolean needClear;
-		for (int k = 0; k < 2; k++) {
+		int mod;
+		if(Main.mod.equals("battle") == true) mod = 2;
+		else {mod = 1;}
+		for (int k = 0; k < mod; k++) {
 			int add = 50;
 			for (int i = Main.colSize - 1; i >= 0; i--) {
 				needClear = true;
@@ -436,41 +574,67 @@ public class Main {
 			}
 			score[k] += add;
 			scoreLabel[k].setText("Score:\n" + score[k]);
+			
 		}
 	}
+	
+	//
+	public static void attack(int num){
+	  	
+       Random ran = new Random();
+       int randblank;
+       int up=0;
+       if(num==0){
+       //player1 attack player2		
+         if(score[0]>=(attacktime[0]+1)*200){
+           randblank = ran.nextInt(Main.rowSize);
+           up=(score[0]-attacktime[0]*200)/200;
+           attacktime[0]+=up;    
+           
+           demap(1);           
+              for(int i=0;i<Main.colSize-up;i++){
+               for(int j=0;j<Main.rowSize;j++){	
+                Main.player[1][j][i]=Main.player[1][j][i+up];
+               }			  
+              }
 
-	public static int isOver() {
-		int over = 1;
-		for (int col = 2; col < colSize; col++) {
-			for (int row = 0; row < rowSize; row++) {
-				if (player[0][row][col] != 0) {
-					break;
-				}
-				if (row == rowSize - 1) {
-					over = 0;
-				}
-			}
-		}
-		if (over == 1) {
-			return 0;
-		}
-		over = 1;
-		for (int col = 2; col < colSize; col++) {
-			for (int row = 0; row < rowSize; row++) {
-				if (player[1][row][col] != 0) {
-					break;
-				}
-				if (row == rowSize - 1) {
-					over = 0;
-				}
-			}
-		}
-		if (over == 1) {
-			return 1;
-		}
-		return -1;
-	}
+       
+              for(int k=1;k<=up;k++){
+               for(int i=0;i<Main.rowSize;i++){
+                if(i==randblank){Main.player[1][i][Main.colSize-k]=0;continue;}	  
+                Main.player[1][i][Main.colSize-k]=100;
+               }
+              }
+              map(1,Main.current2);
+             }
+       }
+       else{
+            //player2 attack player1
+            if(score[1]>=(attacktime[1]+1)*200){
+            	  randblank = ran.nextInt(Main.rowSize);
+                  up=(score[1]-attacktime[1]*200)/200;
+                  attacktime[1]+=up;
+                  System.out.println(up);
+                  demap(0);
+                  
+                     for(int i=0;i<Main.colSize-up;i++){
+                      for(int j=0;j<Main.rowSize;j++){	
+                       Main.player[0][j][i]=Main.player[0][j][i+up];
+                      }			  
+                     }
 
+                     
+                     for(int k=1;k<=up;k++){
+                      for(int i=0;i<Main.rowSize;i++){
+                    	  if(i==randblank){Main.player[0][i][Main.colSize-k]=0;continue;}	  
+                          Main.player[0][i][Main.colSize-k]=100;
+                      }
+                     }
+                     map(0,Main.current1);
+                }	
+       }
+	}	
+	
 	public static void map(int num, int shape) {
 		player[num][Main.x[num][0]][Main.y[num][0]] = shape;
 		player[num][Main.x[num][1]][Main.y[num][1]] = shape;

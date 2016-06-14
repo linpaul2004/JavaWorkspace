@@ -4,11 +4,6 @@ public class LeftL extends Tetris{
 		
 	Main.x[num][0]=4;Main.x[num][1]=4;Main.x[num][2]=5;Main.x[num][3]=6;
 	Main.y[num][0]=0;Main.y[num][1]=1;Main.y[num][2]=1;Main.y[num][3]=1;
-	//if(num == 0){
-	//	Main.current1 = 4;
-	//}else if(num == 1){
-	//	Main.current2 = 4;
-	//}
 	Main.map(num,4);
 	}
 	
