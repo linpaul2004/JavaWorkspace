@@ -35,6 +35,7 @@ public class Main {
 	static int loser;
 	static int current1, current2;
 	static boolean startSignal = false;
+	static boolean pause = false;
 	static String mod = "";
 	static HighScore highscore = new HighScore();
 	static Component frame = new Component();
@@ -205,7 +206,7 @@ public class Main {
 			Tetris.fall();
 
 			////////////////////////////////////////////////////////////////////////
-			while (loser == -1) {
+			while (loser == -1 && startSignal) {
 				System.out.print("");
 				if (Tetris.fall() == 0) {
 					if (isClear == false) {
@@ -285,17 +286,15 @@ public class Main {
 					Tetris.fall();
 				}
 			}
-			frame.removeKeyListener(rot);
-			frame.removeKeyListener(mov);
-			frame.showLose.setLocation(50 + loser * 720, 100);
-			frame.showLose.setVisible(true);
-			HighScore.setHighscore(score[1 - loser], loser);
-			highscore.setLocationRelativeTo(frame);
-			highscore.setVisible(true);
+			if (loser >= 0) {
+				frame.showLose.setLocation(50 + loser * 720, 100);
+				frame.showLose.setVisible(true);
+				HighScore.setHighscore(score[1 - loser], loser);
+				highscore.setLocationRelativeTo(frame);
+				highscore.setVisible(true);
+			}
 			resetGame();
 			frame.showLose.setVisible(false);
-			frame.addKeyListener(rot);
-			frame.addKeyListener(mov);
 		}
 
 		///////////////////////////////// single
@@ -337,7 +336,7 @@ public class Main {
 			Tetris.fall();
 
 			////////////////////////////////////////////////////////////////////////
-			while (loser == -1) {
+			while (loser == -1 && startSignal) {
 				if (Tetris.fall() == 0) {
 					if (isClear == false) {
 						clear(0);
@@ -376,17 +375,15 @@ public class Main {
 					Tetris.fall();
 				}
 			}
-			frame.removeKeyListener(rot);
-			frame.removeKeyListener(mov);
-			frame.showLose.setLocation(50 + loser * 720, 100);
-			frame.showLose.setVisible(true);
-			HighScore.setHighscore(score[1 - loser], loser);
-			highscore.setLocationRelativeTo(frame);
-			highscore.setVisible(true);
+			if (loser >= 0) {
+				frame.showLose.setLocation(50 + loser * 720, 100);
+				frame.showLose.setVisible(true);
+				HighScore.setHighscore(score[1 - loser], loser);
+				highscore.setLocationRelativeTo(frame);
+				highscore.setVisible(true);
+			}
 			resetGame();
 			frame.showLose.setVisible(false);
-			frame.addKeyListener(rot);
-			frame.addKeyListener(mov);
 		}
 	}
 

@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -22,6 +23,8 @@ public class HighScore extends JDialog {
 	private static JTextArea label = new JTextArea();
 	private static JTextArea area = new JTextArea();
 	private static JScrollPane scroll = new JScrollPane(area);
+	private static JButton clean = new JButton("Clean");
+	private static JButton close = new JButton("Close");
 	public static String mode = "";
 
 	public HighScore() {
@@ -30,6 +33,16 @@ public class HighScore extends JDialog {
 		setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
 		add(scroll);
 		add(label);
+		add(clean);
+		add(close);
+		clean.setLocation(100, 200);
+		clean.setSize(clean.getPreferredSize());
+		clean.setFocusable(false);
+		clean.addActionListener(new ButtonControl());
+		close.setLocation(100, 230);
+		close.setSize(close.getPreferredSize());
+		close.setFocusable(false);
+		close.addActionListener(new ButtonControl());
 		label.setLocation(0, 0);
 		label.setVisible(true);
 		label.setEditable(false);
@@ -45,7 +58,31 @@ public class HighScore extends JDialog {
 		scroll.setBounds(area.getBounds().x, area.getBounds().y, area.getBounds().width + 50, area.getBounds().height);
 		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		setModal(true);
-		setSize(300, 250);
+		setSize(300, 300);
+	}
+
+	public static void clean() {
+		File fileSingle = new File("single.txt");
+		File fileBattle = new File("battle.txt");
+		if (fileBattle.exists() == true) {
+			fileBattle.delete();
+			try {
+				fileBattle.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		if (fileSingle.exists() == true) {
+			fileSingle.delete();
+			try {
+				fileSingle.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		area.setText("");
 	}
 
 	public static void readScore() {
@@ -77,7 +114,7 @@ public class HighScore extends JDialog {
 				output += "Score: " + readSingle.nextInt() + "\n";
 			}
 			readSingle.close();
-			output += "Battle";
+			output += "Battle\n";
 			while (readBattle.hasNextInt()) {
 				int s = readBattle.nextInt();
 				output += "Player" + readBattle.nextInt() + " Score: " + s + "\n";
