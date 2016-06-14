@@ -219,7 +219,7 @@ public class Main {
 				loser = m.isOver();
 				if (Tetris.fall() == 0) {
 					clear();
-					Rotate.rotation1 = 0;
+					rot.rotation1 = 0;
 					rand1 = randNext1;
 					current1 = rand1;
 					randNext1 = ran.nextInt(7) + 1;
@@ -258,7 +258,7 @@ public class Main {
 					current2 = rand2;
 					randNext2 = ran.nextInt(7) + 1;
 					setNext(1, randNext2);
-					Rotate.rotation2 = 0;
+					rot.rotation2 = 0;
 					switch (rand2) {
 					case 1:
 						new TShape(1);
@@ -295,6 +295,7 @@ public class Main {
 			message += (m.setHighscore(score[1 - loser], loser));
 			JOptionPane.showMessageDialog(null, message);
 			resetGame();
+			frame.showLose.setVisible(false);
 			frame.addKeyListener(rot);
 			frame.addKeyListener(mov);
 		}
@@ -344,7 +345,7 @@ public class Main {
 					//
 					attack(0);
 					/////
-					Rotate.rotation1 = 0;
+					rot.rotation1 = 0;
 					rand1 = randNext1;
 					current1 = rand1;
 					randNext1 = ran.nextInt(7) + 1;
@@ -398,6 +399,7 @@ public class Main {
 	    //////////
 		attacktime[0]=attacktime[1]=0;
 		//////////
+		
 		Tetris.speed = 1;
 		startSignal = false;;
 		for (int i = 0; i < 2; i++) {
