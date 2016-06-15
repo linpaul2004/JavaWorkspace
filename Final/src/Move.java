@@ -41,6 +41,8 @@ public class Move implements KeyListener {
 			}
 
 			Main.map(0, Main.current1);
+			Main.deHint(0);
+			Main.setHint(0);
 			Main.setIcon(0);
 
 			break;
@@ -70,6 +72,8 @@ public class Move implements KeyListener {
 			}
 
 			Main.map(0, Main.current1);
+			Main.deHint(0);
+			Main.setHint(0);
 			Main.setIcon(0);
 
 			break;
@@ -90,10 +94,10 @@ public class Move implements KeyListener {
 			int stx = -1;
 			for (int i = 0; i < 4; i++) {
 				for (int j = Main.y[0][i] + 1; j < Main.colSize; j++) {
-					if (Main.x[0][i] != stx && Main.player[0][Main.x[0][i]][j] == 0) {
+					if (Main.x[0][i] != stx && Main.player[0][Main.x[0][i]][j] <= 0) {
 						findstop = true;
 						for (int k = j; k < Main.colSize; k++) {
-							if (Main.player[0][Main.x[0][i]][k] != 0) {
+							if (Main.player[0][Main.x[0][i]][k] > 0) {
 								if (tmp > k - j) {
 									tmp = k - j;
 								}
@@ -123,6 +127,7 @@ public class Move implements KeyListener {
 
 			Main.map(0, Main.current1);
 			Main.clear(0);
+			
 			Main.isClear = true;
 			if (Main.mod.equals("battle") == true)
 				Main.attack(0);
@@ -174,6 +179,8 @@ public class Move implements KeyListener {
 			}
 
 			Main.map(1, Main.current2);
+			Main.deHint(1);
+			Main.setHint(1);
 			Main.setIcon(1);
 
 			break;
@@ -204,6 +211,8 @@ public class Move implements KeyListener {
 			}
 
 			Main.map(1, Main.current2);
+			Main.deHint(1);
+			Main.setHint(1);
 			Main.setIcon(1);
 
 			break;
@@ -225,10 +234,10 @@ public class Move implements KeyListener {
 			stx = -1;
 			for (int i = 0; i < 4; i++) {
 				for (int j = Main.y[1][i] + 1; j < Main.colSize; j++) {
-					if (Main.x[1][i] != stx && Main.player[1][Main.x[1][i]][j] == 0) {
+					if (Main.x[1][i] != stx && Main.player[1][Main.x[1][i]][j] <= 0) {
 						findstop = true;
 						for (int k = j; k < Main.colSize; k++) {
-							if (Main.player[1][Main.x[1][i]][k] != 0) {
+							if (Main.player[1][Main.x[1][i]][k] > 0) {
 								if (tmp > k - j) {
 									tmp = k - j;
 								}

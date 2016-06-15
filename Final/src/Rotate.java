@@ -42,6 +42,8 @@ public class Rotate implements KeyListener{
 					if(t2.rotation(rotation2, 1) == false) rotation2--;
 					break;
 			}
+			Main.deHint(1);
+			Main.setHint(1);
 			
 		}
 		
@@ -78,6 +80,8 @@ public class Rotate implements KeyListener{
 				if(t1.rotation(rotation1, 0) == false) rotation1--;
 				break;
 			}
+			Main.deHint(0);
+			Main.setHint(0);
 			
 		}
 		

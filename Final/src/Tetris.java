@@ -5,14 +5,14 @@ public abstract class Tetris {
 	public abstract boolean rotation(int count, int num);
 
 	public static int fall() {
-		
 		Block blk = new Block();
 		System.out.print("");
 		
 		while (true) {
+			System.out.print("");
 			if (Main.isClear == true)
 				return 0;
-			System.out.print("");
+			
 			if(Main.mod.equals("timeMode") == true){
 				Main.now = System.currentTimeMillis();
 				Main.counter.setText("Time:\n" + (Main.now-Main.before-Main.pauseTime)/1000 );

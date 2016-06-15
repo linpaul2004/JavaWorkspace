@@ -22,13 +22,16 @@ public class Main {
 	static ImageIcon icon5 = new ImageIcon("t5.png");
 	static ImageIcon icon6 = new ImageIcon("t6.png");
 	static ImageIcon icon7 = new ImageIcon("t7.png");
+	static ImageIcon iconhint = new ImageIcon("hint.jpg");
 	// attack
 	static ImageIcon iconbrick = new ImageIcon("brick.png");
 	static boolean attack0, attack1;
 	static int[] attacktime = new int[2];
 	static boolean isClear = false;
 	////////////
-
+	
+	static int[][] hintx=new int[2][4];
+	static int[][] hinty=new int[2][4];
 	static int[][] x = new int[2][4];
 	static int[][] y = new int[2][4];
 	static int[] score = new int[2];
@@ -138,7 +141,8 @@ public class Main {
 			frame.add(scoreLabel[1]);
 			scoreLabel[1].setFocusable(false);
 		}
-
+		
+		
 		for (int i = 0; i < rowSize; i++) {
 			for (int j = 2; j < colSize; j++) {
 				lb[0][i][j] = new JLabel();
@@ -156,7 +160,8 @@ public class Main {
 				}
 			}
 		}
-
+		
+		
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 3; j++) {
 				next[0][i][j] = new JLabel();
@@ -238,7 +243,8 @@ public class Main {
 				new RightZ(1);
 				break;
 			}
-
+			setHint(0);
+            setHint(1);
 			Tetris.fall();
 
 			////////////////////////////////////////////////////////////////////////
@@ -281,7 +287,7 @@ public class Main {
 						new RightZ(0);
 						break;
 					}
-
+					setHint(0);
 					Tetris.fall();
 				} else {
 					if (isClear == false) {
@@ -322,7 +328,7 @@ public class Main {
 						new RightZ(1);
 						break;
 					}
-
+					setHint(1);
 					Tetris.fall();
 				}
 			}
@@ -372,7 +378,7 @@ public class Main {
 				new RightZ(0);
 				break;
 			}
-
+			setHint(0);
 			Tetris.fall();
 
 			////////////////////////////////////////////////////////////////////////
@@ -412,7 +418,7 @@ public class Main {
 						new RightZ(0);
 						break;
 					}
-
+					setHint(0);
 					Tetris.fall();
 				}
 			}
@@ -474,7 +480,7 @@ public class Main {
 				new RightZ(0);
 				break;
 			}
-
+			setHint(0);
 			Tetris.fall();
 
 			////////////////////////////////////////////////////////////////////////
@@ -524,7 +530,7 @@ public class Main {
 						new RightZ(0);
 						break;
 					}
-
+					setHint(0);
 					Tetris.fall();
 				}
 			}
@@ -586,7 +592,7 @@ public class Main {
 				new RightZ(0);
 				break;
 			}
-
+			setHint(0);
 			Tetris.fall();
 
 			////////////////////////////////////////////////////////////////////////
@@ -629,7 +635,7 @@ public class Main {
 						new RightZ(0);
 						break;
 					}
-
+					setHint(0);
 					Tetris.fall();
 				}
 			}
@@ -711,7 +717,11 @@ public class Main {
 				case 100:
 					lb[num][i][j].setIcon(iconbrick);
 					break;
+				case -1:
+					lb[num][i][j].setIcon(iconhint);
+					break;
 				}
+				
 			}
 		}
 	}
@@ -720,7 +730,7 @@ public class Main {
 		int over = 1;
 		for (int col = 0; col < colSize; col++) {
 			for (int row = 0; row < rowSize; row++) {
-				if (player[0][row][col] != 0) {
+				if (player[0][row][col] > 0) {
 					break;
 				}
 				if (row == rowSize - 1) {
@@ -736,7 +746,7 @@ public class Main {
 			over = 1;
 			for (int col = 0; col < colSize; col++) {
 				for (int row = 0; row < rowSize; row++) {
-					if (player[1][row][col] != 0) {
+					if (player[1][row][col] > 0) {
 						break;
 					}
 					if (row == rowSize - 1) {
@@ -756,15 +766,17 @@ public class Main {
 		boolean hasCombo = false;
 		int combo = 0;
 		int add = 0;
+		
 		for (int i = Main.colSize - 1; i >= 0; i--) {
 			needClear = true;
 			for (int j = 0; j < Main.rowSize; j++) {
-				if (Main.player[num][j][i] == 0) {
+				if (Main.player[num][j][i] <= 0) {
 					needClear = false;
 					break;
 				}
 			}
 			if (needClear) {
+				
 				hasCombo = true;
 				line++;
 				for (int ii = i; ii >= 1; ii--) {
@@ -785,7 +797,7 @@ public class Main {
 
 		score[num] += (100 * ((add * (add + 1)) / 2)) * ((combo + 1) / 2);
 		scoreLabel[num].setText("Score:\n" + score[num]);
-
+		
 	}
 
 	//
@@ -969,5 +981,72 @@ public class Main {
 			break;
 		}
 	}
+/////////////////////////hint	
+	public static void setHint(int num){
+	Block blk=new Block();
+	if (blk.bottomBlock(num) == true || blk.fallBlock(num) == true) return;
+
+
+	int tmp = Main.colSize;
+	boolean downtobottom = true;
+	boolean findstop = false;
+	boolean overlap=false;
+	int stx = -1;
+
+	for (int i = 0; i < 4; i++) {
+		for (int j = Main.y[num][i] + 1; j < Main.colSize; j++) {
+			if (Main.x[num][i] != stx && Main.player[num][ Main.x[num][i] ][j] <= 0) {
+				findstop = true;
+				for (int k = j; k < Main.colSize; k++) {
+					if (Main.player[num][Main.x[num][i]][k] > 0) {
+						if (tmp > k - j) {
+							tmp = k - j;
+						}
+						stx = Main.x[num][i];
+						downtobottom = false;
+						j = Main.colSize + 1; // to break from j
+						break; // break from k
+					} // if==1,second search
+					downtobottom = true;
+				} // for k
+				if (downtobottom) {
+					if (tmp > Main.colSize - Main.y[num][i] - 1) {
+						tmp = Main.colSize - Main.y[num][i] - 1;
+					}
+				}
+			} // if==0,first search
+		} // for j
+		if (!findstop) {
+			break;
+		}
+	} // for i      
+
+	for (int i = 0; i < 4; i++) {
+		hinty[num][i]=Main.y[num][i] + tmp;
+		hintx[num][i]=Main.x[num][i];
+	}
+
+	for(int i=0;i<4;i++){
+		overlap=false;
+		for(int j=0;j<4;j++){
+			if(hinty[num][i]==Main.y[num][j]){
+				overlap=true; 
+				break;
+			}				
+		}		
+		if(!overlap)player[num][hintx[num][i]][hinty[num][i]]=-1;
+
+
+	}
+
+	setIcon(num);		
+	}
+
+	public static void deHint(int num){
+		for (int i = 0; i < 4; i++) {
+			if( player[num][hintx[num][i]][hinty[num][i]]<=0 ) player[num][hintx[num][i]][hinty[num][i]]=0;
+		}
+	}
+//////////////////////////////////////////hint end
 
 }

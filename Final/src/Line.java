@@ -19,9 +19,9 @@ public class Line extends Tetris {
 		case 1:
 			if(Main.y[num][1]+2 > Main.colSize-1) return false;
 			if(Main.y[num][1]-1 < 0			   ) return false;
-			if(Main.player[num][Main.x[num][1]][Main.y[num][1]+2] != 0 ) return false;
-			if(Main.player[num][Main.x[num][1]][Main.y[num][1]+1] != 0 ) return false;
-			if(Main.player[num][Main.x[num][1]][Main.y[num][1]-1] != 0 ) return false;
+			if(Main.player[num][Main.x[num][1]][Main.y[num][1]+2] > 0 ) return false;
+			if(Main.player[num][Main.x[num][1]][Main.y[num][1]+1] > 0 ) return false;
+			if(Main.player[num][Main.x[num][1]][Main.y[num][1]-1] > 0 ) return false;
 			/////////////////////////////////////////////////
 			Main.demap(num);
 			
@@ -40,9 +40,9 @@ public class Line extends Tetris {
 		case 0:
 			if(Main.x[num][1]+2 > Main.rowSize-1) return false;
 			if(Main.x[num][1]-1 < 0			   ) return false;
-			if(Main.player[num][Main.x[num][1]+2][Main.y[num][1]] != 0 ) return false;
-			if(Main.player[num][Main.x[num][1]+1][Main.y[num][1]] != 0 ) return false;
-			if(Main.player[num][Main.x[num][1]-1][Main.y[num][1]] != 0 ) return false;
+			if(Main.player[num][Main.x[num][1]+2][Main.y[num][1]] > 0 ) return false;
+			if(Main.player[num][Main.x[num][1]+1][Main.y[num][1]] > 0 ) return false;
+			if(Main.player[num][Main.x[num][1]-1][Main.y[num][1]] > 0 ) return false;
 			///////////////////////////////////////////////////
 			Main.demap(num);
 			

@@ -33,8 +33,8 @@ public class RightL extends Tetris{
 			tempY2 = Main.y[num][2];
 			tempY3 = Main.y[num][3];
 			if(tempY0-1<0) return false;
-			if(Main.player[num][tempX0-1][tempY0-1] != 0 ) return false;
-			if(Main.player[num][tempX0-1][tempY0] != 0 ) return false;
+			if(Main.player[num][tempX0-1][tempY0-1] > 0 ) return false;
+			if(Main.player[num][tempX0-1][tempY0] > 0 ) return false;
 			/////////////////////////////////////////////////
 			Main.demap(num);
 			
@@ -61,9 +61,9 @@ public class RightL extends Tetris{
 			tempY2 = Main.y[num][2];
 			tempY3 = Main.y[num][3];
 			if(tempX2-1<0) return false;
-			if(Main.player[num][tempX1-1][tempY1] != 0 ) return false;
-			if(Main.player[num][tempX1+1][tempY1] != 0 ) return false;
-			if(Main.player[num][tempX1-1][tempY1+1] != 0 ) return false;
+			if(Main.player[num][tempX1-1][tempY1] > 0 ) return false;
+			if(Main.player[num][tempX1+1][tempY1] > 0 ) return false;
+			if(Main.player[num][tempX1-1][tempY1+1] > 0 ) return false;
 			///////////////////////////////////////////////////
 			Main.demap(num);
 			
@@ -92,9 +92,9 @@ public class RightL extends Tetris{
 			tempY2 = Main.y[num][2];
 			tempY3 = Main.y[num][3];
 			if(tempY1-1<0) return false;
-			if(Main.player[num][tempX1-1][tempY1-1] != 0 ) return false;
-			if(Main.player[num][tempX1][tempY1-1] != 0 ) return false;
-			if(Main.player[num][tempX1][tempY1+1] != 0 ) return false;
+			if(Main.player[num][tempX1-1][tempY1-1] > 0 ) return false;
+			if(Main.player[num][tempX1][tempY1-1] > 0 ) return false;
+			if(Main.player[num][tempX1][tempY1+1] > 0 ) return false;
 			///////////////////////////////////////////////////
 			Main.demap(num);
 			
@@ -122,9 +122,9 @@ public class RightL extends Tetris{
 			tempY2 = Main.y[num][2];
 			tempY3 = Main.y[num][3];
 			if(tempX1+1>Main.rowSize-1) return false;
-			if(Main.player[num][tempX1+1][tempY1] != 0 ) return false;
-			if(Main.player[num][tempX1-1][tempY1+1] != 0 ) return false;
-			if(Main.player[num][tempX1+1][tempY1+1] != 0 ) return false;
+			if(Main.player[num][tempX1+1][tempY1] > 0 ) return false;
+			if(Main.player[num][tempX1-1][tempY1+1] > 0 ) return false;
+			if(Main.player[num][tempX1+1][tempY1+1] > 0 ) return false;
 			///////////////////////////////////////////////////
 			Main.demap(num);
 			

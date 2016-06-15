@@ -32,8 +32,8 @@ public class RightZ extends Tetris{
 			tempY2 = Main.y[num][2];
 			tempY3 = Main.y[num][3];
 			if(tempY3+1>Main.colSize-1) return false;
-			if(Main.player[num][tempX3+1][tempY3] != 0 ) return false;
-			if(Main.player[num][tempX3+1][tempY3+1] != 0 ) return false;
+			if(Main.player[num][tempX3+1][tempY3] > 0 ) return false;
+			if(Main.player[num][tempX3+1][tempY3+1] > 0 ) return false;
 			/////////////////////////////////////////////////
 			Main.demap(num);
 			
@@ -60,8 +60,8 @@ public class RightZ extends Tetris{
 			tempY2 = Main.y[num][2];
 			tempY3 = Main.y[num][3];
 			if(tempX1-1<0) return false;
-			if(Main.player[num][tempX0+1][tempY0] != 0 ) return false;
-			if(Main.player[num][tempX1-1][tempY1] != 0 ) return false;
+			if(Main.player[num][tempX0+1][tempY0] > 0 ) return false;
+			if(Main.player[num][tempX1-1][tempY1] > 0 ) return false;
 			///////////////////////////////////////////////////
 			Main.demap(num);
 			
