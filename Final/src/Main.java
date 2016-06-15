@@ -39,64 +39,60 @@ public class Main {
 	static String mod = "";
 	static HighScore highscore = new HighScore();
 	static Component frame = new Component();
-	static int line=0;
+	static int line = 0;
 	static long before = 0;
 	static long now = 0;
 	static long pauseTime = 0;
 	static JTextArea counter = new JTextArea();
-	
+
 	public static void main(String[] args) {
 		int rand1;
 		int rand2;
 		int randNext1;
 		int randNext2;
-		
+
 		Random ran = new Random();
 		Move mov = new Move();
 		Rotate rot = new Rotate();
 		frame.addKeyListener(mov);
 		frame.addKeyListener(rot);
 		JTextArea restline = new JTextArea();
-		
+
 		//////////////////////////////////////////////////////
-		/*while(true){
-			if(mod.equals("battle") == false) {
-				System.out.println("");
-				frame.gameStart.setVisible(false);
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-				
-			
-		}*/
-		while(true){
+		/*
+		 * while(true){ if(mod.equals("battle") == false) {
+		 * System.out.println(""); frame.gameStart.setVisible(false); try {
+		 * Thread.sleep(500); } catch (InterruptedException e) {
+		 * e.printStackTrace(); } }
+		 * 
+		 * 
+		 * }
+		 */
+		while (true) {
 			System.out.println("");
-			if(mod.equals("battle") == true) {
+			if (mod.equals("battle") == true) {
 				frame.setSize(1400, 870);
 				frame.setting();
 				break;
 			}
-			
-			if(mod.equals("single") == true){
+
+			if (mod.equals("single") == true) {
 				frame.singleSetting();
-				while(true){
+				while (true) {
 					System.out.println("");
-					if(mod.equals("classic") == true){
+					if (mod.equals("classic") == true) {
 						frame.setSize(700, 870);
 						frame.setting();
 						break;
 					}
-					
-					if(mod.equals("challenge") == true){
+
+					if (mod.equals("challenge") == true) {
 						frame.setSize(700, 870);
 						frame.setting();
 						break;
 					}
-					
-					if(mod.equals("timeMode") == true){
+
+					if (mod.equals("timeMode") == true) {
 						frame.setSize(700, 870);
 						frame.setting();
 						break;
@@ -105,7 +101,7 @@ public class Main {
 				break;
 			}
 		}
-		
+
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 10; j++) {
 				for (int k = 0; k < 20; k++) {
@@ -249,7 +245,7 @@ public class Main {
 			while (loser == -1 && startSignal) {
 				System.out.print("");
 				if (Tetris.fall() == 0) {
-					
+
 					if (isClear == false) {
 						clear(0);
 					}
@@ -261,7 +257,7 @@ public class Main {
 					randNext1 = ran.nextInt(7) + 1;
 					setNext(0, randNext1);
 					isClear = false;
-					mov.isDrop[0]=false;
+					mov.isDrop[0] = false;
 					switch (rand1) {
 					case 1:
 						new TShape(0);
@@ -301,7 +297,7 @@ public class Main {
 					setNext(1, randNext2);
 					rot.rotation2 = 0;
 					isClear = false;
-					mov.isDrop[1]=false;
+					mov.isDrop[1] = false;
 					switch (rand2) {
 					case 1:
 						new TShape(1);
@@ -321,7 +317,7 @@ public class Main {
 					case 6:
 						new RightL(1);
 						break;
-					
+
 					case 7:
 						new RightZ(1);
 						break;
@@ -352,7 +348,7 @@ public class Main {
 			rand1 = ran.nextInt(7) + 1;
 			current1 = rand1;
 			setNext(0, randNext1);
-            mov.isDrop[0]=false;
+			mov.isDrop[0] = false;
 			switch (rand1) {
 			case 1:
 				new TShape(0);
@@ -392,7 +388,7 @@ public class Main {
 					randNext1 = ran.nextInt(7) + 1;
 					setNext(0, randNext1);
 					isClear = false;
-					mov.isDrop[0]=false;
+					mov.isDrop[0] = false;
 					switch (rand1) {
 					case 1:
 						new TShape(0);
@@ -431,25 +427,25 @@ public class Main {
 			resetGame();
 			frame.showLose.setVisible(false);
 		}
-		
+
 		while (mod.equals("challenge") == true) {
 			System.out.println("");
-			int goal=3;
-			int add=1;
+			int goal = 3;
+			int add = 1;
 			int other;
 
 			restline.setBackground(SystemColor.control);
-			restline.setText("Rest line:\n" + (goal - line) );
+			restline.setText("Rest line:\n" + (goal - line));
 			restline.setFont(new Font(restline.getFont().getName(), restline.getFont().getStyle(), 40));
 			restline.setSize(restline.getPreferredSize());
-			restline.setLocation(500,650 );
+			restline.setLocation(500, 650);
 			frame.add(restline);
 			restline.setFocusable(false);
 			//////
 			if (startSignal == false) {
 				continue;
-			}			
-			
+			}
+
 			randNext1 = ran.nextInt(7) + 1;
 			rand1 = ran.nextInt(7) + 1;
 			current1 = rand1;
@@ -487,15 +483,15 @@ public class Main {
 					if (isClear == false) {
 						clear(0);
 					}
-					other=score[0]/100;
-					restline.setText("Rest line:\n" + (goal - other) );
-					if(goal <= other){
-					 other=other-goal;
-					 add+=2;
-				     goal+=add;
-				     
-					 Tetris.speed+=40;
-					 restline.setText("Rest line:\n" + (goal-other) );
+					other = score[0] / 100;
+					restline.setText("Rest line:\n" + (goal - other));
+					if (goal <= other) {
+						other = other - goal;
+						add += 2;
+						goal += add;
+
+						Tetris.speed += 40;
+						restline.setText("Rest line:\n" + (goal - other));
 					}
 					loser = isOver();
 					rot.rotation1 = 0;
@@ -504,7 +500,7 @@ public class Main {
 					randNext1 = ran.nextInt(7) + 1;
 					setNext(0, randNext1);
 					isClear = false;
-					mov.isDrop[0]=false;
+					mov.isDrop[0] = false;
 					switch (rand1) {
 					case 1:
 						new TShape(0);
@@ -532,49 +528,36 @@ public class Main {
 					Tetris.fall();
 				}
 			}
-			frame.removeKeyListener(rot);
-			frame.removeKeyListener(mov);
-			frame.showLose.setLocation(50 + loser * 720, 100);
-			frame.showLose.setVisible(true);
-			HighScore.setHighscore(score[0], loser);
-			highscore.setLocationRelativeTo(frame);
-			highscore.setVisible(true); 
-			
+			frame.gameStart.setText("Start");
+			if (loser >= 0) {
+				frame.showLose.setLocation(50 + loser * 720, 100);
+				frame.showLose.setVisible(true);
+				HighScore.setHighscore(score[1 - loser], loser);
+				highscore.setLocationRelativeTo(frame);
+				highscore.setVisible(true);
+			}
 			resetGame();
 			frame.showLose.setVisible(false);
-			restline.setText("Rest line:\n" + 0 );
-			frame.addKeyListener(rot);
-			frame.addKeyListener(mov);
-		
+			restline.setText("Rest line:\n0");
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
 		while (mod.equals("timeMode") == true) {
 			System.out.println("");
-			
-			
+
 			counter.setBackground(SystemColor.control);
-			counter.setText("Time:\n" + (now-before)/1000 );
+			counter.setText("Time:\n" + (now - before) / 1000);
 			counter.setFont(new Font(counter.getFont().getName(), counter.getFont().getStyle(), 40));
 			counter.setSize(counter.getPreferredSize());
-			counter.setLocation(500,650 );
+			counter.setLocation(500, 650);
 			frame.add(counter);
 			restline.setFocusable(false);
-			
+
 			if (startSignal == false) {
 				continue;
 			}
-			
+
 			before = System.currentTimeMillis();
-			 
+
 			randNext1 = ran.nextInt(7) + 1;
 			rand1 = ran.nextInt(7) + 1;
 			current1 = rand1;
@@ -608,8 +591,9 @@ public class Main {
 
 			////////////////////////////////////////////////////////////////////////
 			while (loser == -1 && startSignal) {
-				if(before == 0) before = System.currentTimeMillis();
-				
+				if (before == 0)
+					before = System.currentTimeMillis();
+
 				if (Tetris.fall() == 0) {
 					if (isClear == false) {
 						clear(0);
@@ -621,7 +605,7 @@ public class Main {
 					randNext1 = ran.nextInt(7) + 1;
 					setNext(0, randNext1);
 					isClear = false;
-					mov.isDrop[0]=false;
+					mov.isDrop[0] = false;
 					switch (rand1) {
 					case 1:
 						new TShape(0);
@@ -669,7 +653,7 @@ public class Main {
 		if (mod.equals("battle") == true) {
 			scoreLabel[1].setText("Score:\n" + score[1]);
 		}
-		
+
 		//////////
 		attacktime[0] = attacktime[1] = 0;
 		//////////
@@ -769,8 +753,8 @@ public class Main {
 
 	public static void clear(int num) {
 		boolean needClear;
-		boolean hasCombo=false;
-		int combo=0;
+		boolean hasCombo = false;
+		int combo = 0;
 		int add = 0;
 		for (int i = Main.colSize - 1; i >= 0; i--) {
 			needClear = true;
@@ -781,7 +765,7 @@ public class Main {
 				}
 			}
 			if (needClear) {
-				hasCombo=true;
+				hasCombo = true;
 				line++;
 				for (int ii = i; ii >= 1; ii--) {
 					for (int jj = 0; jj < Main.rowSize; jj++) {
@@ -791,12 +775,15 @@ public class Main {
 				i++;
 				add++;
 			}
-		
+
 		}
-		if(hasCombo){combo++;}
-		else{combo=0;}
-	  
-		score[num] += ( 100 * ((add * (add + 1)) / 2) )*((combo+1)/2);
+		if (hasCombo) {
+			combo++;
+		} else {
+			combo = 0;
+		}
+
+		score[num] += (100 * ((add * (add + 1)) / 2)) * ((combo + 1) / 2);
 		scoreLabel[num].setText("Score:\n" + score[num]);
 
 	}

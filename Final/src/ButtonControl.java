@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 public class ButtonControl implements ActionListener {
 	long tempbefore;
 	long tempnow;
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -29,15 +30,18 @@ public class ButtonControl implements ActionListener {
 			HighScore.readScore();
 			Main.highscore.setLocationRelativeTo(Main.frame);
 			Main.highscore.setVisible(true);
-		}else if(e.getActionCommand().equals("Classic")){
+		} else if (e.getActionCommand().equals("Classic")) {
 			Main.mod = "classic";
-		}else if(e.getActionCommand().equals("Challenge")){
+		} else if (e.getActionCommand().equals("Challenge")) {
 			Main.mod = "challenge";
-		}else if(e.getActionCommand().equals("Time")){
+		} else if (e.getActionCommand().equals("Time")) {
 			Main.mod = "timeMode";
-		}else if (e.getActionCommand().equals("Clean")) {
+		} else if (e.getActionCommand().equals("Clean")) {
 			HighScore.clean();
 		} else if (e.getActionCommand().equals("Abort")) {
+			if (Main.pause) {
+				return;
+			}
 			try {
 				Robot robot = new Robot();
 				if (Main.mod.equals("battle")) {
@@ -55,10 +59,10 @@ public class ButtonControl implements ActionListener {
 		} else if (e.getActionCommand().equals("Close")) {
 			Main.highscore.setVisible(false);
 		} else if (e.getActionCommand().equals("Pause") || e.getActionCommand().equals("Continue")) {
-			if(e.getActionCommand().equals("Pause")){
+			if (e.getActionCommand().equals("Pause")) {
 				tempbefore = System.currentTimeMillis();
 			}
-			if(e.getActionCommand().equals("Continue")){
+			if (e.getActionCommand().equals("Continue")) {
 				tempnow = System.currentTimeMillis();
 				Main.pauseTime += tempnow - tempbefore;
 			}
