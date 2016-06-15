@@ -11,6 +11,9 @@ public class Component extends JFrame {
 	JButton single = new JButton();
 	JButton battle = new JButton();
 	JButton pause = new JButton();
+	JButton classic = new JButton();
+	JButton challenge = new JButton();
+	JButton timeMode = new JButton();
 	JLabel showLose = new JLabel();
 	JLabel title = new JLabel();
 	ImageIcon iconLose = new ImageIcon("lose.jpg");
@@ -44,6 +47,26 @@ public class Component extends JFrame {
 		rank.setSize(single.getPreferredSize());
 		rank.setLocation(getSize().width / 2 - rank.getSize().width / 2, 650);
 		rank.addActionListener(new ButtonControl());
+		
+		challenge.setText("Challenge");
+		challenge.setSize(challenge.getPreferredSize());
+		challenge.setLocation(getSize().width / 2 - rank.getSize().width / 2, 550);
+		challenge.addActionListener(new ButtonControl());
+		challenge.setVisible(false);
+		
+		classic.setText("Classic");
+		classic.setSize(challenge.getPreferredSize());
+		classic.setLocation(getSize().width / 2 - rank.getSize().width / 2, 500);
+		classic.addActionListener(new ButtonControl());
+		classic.setVisible(false);
+		
+		timeMode.setText("Time");
+		timeMode.setSize(challenge.getPreferredSize());
+		timeMode.setLocation(getSize().width / 2 - rank.getSize().width / 2, 600);
+		timeMode.addActionListener(new ButtonControl());
+		timeMode.setVisible(false);
+		
+		
 
 		showLose.setIcon(iconLose);
 		showLose.setSize(showLose.getPreferredSize());
@@ -59,6 +82,9 @@ public class Component extends JFrame {
 		add(showLose);
 		add(title);
 		add(pause);
+		add(classic);
+		add(challenge);
+		add(timeMode);
 		//////////////////////////////////////////////////////
 		setLayout(null);
 		setVisible(true);
@@ -67,6 +93,10 @@ public class Component extends JFrame {
 		single.setFocusable(false);
 		battle.setFocusable(false);
 		pause.setFocusable(false);
+		classic.setFocusable(false);
+		challenge.setFocusable(false);
+		timeMode.setFocusable(false);
+		
 		for(int i = -200; i<300; i++)
 		{
 			try {
@@ -85,6 +115,19 @@ public class Component extends JFrame {
 		single.setVisible(false);
 		battle.setVisible(false);
 		title.setVisible(false);
+		classic.setVisible(false);
+		challenge.setVisible(false);
+		timeMode.setVisible(false);
+	}
+	
+	public void singleSetting(){
+		rank.setVisible(false);
+		single.setVisible(false);
+		battle.setVisible(false);
+		title.setVisible(false);
+		classic.setVisible(true);
+		challenge.setVisible(true);
+		timeMode.setVisible(true);
 	}
 
 }

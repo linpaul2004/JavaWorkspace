@@ -5,11 +5,18 @@ public abstract class Tetris {
 	public abstract boolean rotation(int count, int num);
 
 	public static int fall() {
+		
 		Block blk = new Block();
 		System.out.print("");
-		if (Main.isClear == true)
-			return 0;
+		
 		while (true) {
+			if (Main.isClear == true)
+				return 0;
+			System.out.print("");
+			if(Main.mod.equals("timeMode") == true){
+				Main.now = System.currentTimeMillis();
+				Main.counter.setText("Time:\n" + (Main.now-Main.before-Main.pauseTime)/1000 );
+			}
 			if (blk.bottomBlock(0) == true) {
 				return 0;
 			}
@@ -53,7 +60,7 @@ public abstract class Tetris {
 			}
 
 			try {
-				Thread.sleep(500 / speed);
+				Thread.sleep(500 - speed);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

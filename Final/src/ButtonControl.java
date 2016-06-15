@@ -7,7 +7,8 @@ import java.awt.event.KeyEvent;
 //import javax.swing.JOptionPane;
 
 public class ButtonControl implements ActionListener {
-
+	long tempbefore;
+	long tempnow;
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -28,7 +29,13 @@ public class ButtonControl implements ActionListener {
 			HighScore.readScore();
 			Main.highscore.setLocationRelativeTo(Main.frame);
 			Main.highscore.setVisible(true);
-		} else if (e.getActionCommand().equals("Clean")) {
+		}else if(e.getActionCommand().equals("Classic")){
+			Main.mod = "classic";
+		}else if(e.getActionCommand().equals("Challenge")){
+			Main.mod = "challenge";
+		}else if(e.getActionCommand().equals("Time")){
+			Main.mod = "timeMode";
+		}else if (e.getActionCommand().equals("Clean")) {
 			HighScore.clean();
 		} else if (e.getActionCommand().equals("Abort")) {
 			try {
@@ -48,6 +55,13 @@ public class ButtonControl implements ActionListener {
 		} else if (e.getActionCommand().equals("Close")) {
 			Main.highscore.setVisible(false);
 		} else if (e.getActionCommand().equals("Pause") || e.getActionCommand().equals("Continue")) {
+			if(e.getActionCommand().equals("Pause")){
+				tempbefore = System.currentTimeMillis();
+			}
+			if(e.getActionCommand().equals("Continue")){
+				tempnow = System.currentTimeMillis();
+				Main.pauseTime += tempnow - tempbefore;
+			}
 			if (Main.frame.gameStart.getText().equals("Abort")) {
 				Main.pause = Main.pause ? false : true;
 				Main.frame.pause.setText(Main.frame.pause.getText().equals("Pause") ? "Continue" : "Pause");

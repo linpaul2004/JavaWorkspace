@@ -7,6 +7,7 @@ public class Move implements KeyListener {
 	long before1 = 0;
 	long before2 = 0;
 	int speed = 50;
+	boolean[] isDrop=new boolean[2];
 
 	public void keyPressed(KeyEvent e) {
 		Block blk = new Block();
@@ -18,8 +19,11 @@ public class Move implements KeyListener {
 		case KeyEvent.VK_A:
 			if (blk.leftBlock(0) == true)
 				break;
-			if (blk.bottomBlock(0) == true || blk.fallBlock(0) == true)
-				break;
+	//		if (blk.bottomBlock(0) == true || blk.fallBlock(0) == true)
+		//		break;
+			 if(isDrop[0]==true)     
+	            	break;
+			
 
 			if (Main.x[0][0] - 1 < 0)
 				break;
@@ -44,9 +48,12 @@ public class Move implements KeyListener {
 		case KeyEvent.VK_D:
 			if (blk.rightBlock(0) == true)
 				break;
-			if (blk.bottomBlock(0) == true || blk.fallBlock(0) == true)
-				break;
-
+	//		if (blk.bottomBlock(0) == true || blk.fallBlock(0) == true)
+	//			break;
+            if(isDrop[0]==true)     
+            	break;
+            
+            
 			if (Main.x[0][0] + 1 > Main.rowSize - 1)
 				break;
 			if (Main.x[0][1] + 1 > Main.rowSize - 1)
@@ -76,7 +83,7 @@ public class Move implements KeyListener {
 			if (blk.bottomBlock(0)) {
 				break;
 			}
-
+            isDrop[0]=true;
 			int tmp = Main.colSize;
 			boolean downtobottom = true;
 			boolean findstop = false;
@@ -146,9 +153,11 @@ public class Move implements KeyListener {
 				break;
 			if (blk.leftBlock(1) == true)
 				break;
-			if (blk.bottomBlock(1) == true || blk.fallBlock(1) == true)
+		//	if (blk.bottomBlock(1) == true || blk.fallBlock(1) == true)
+			//	break;
+			if(isDrop[1]==true)
 				break;
-
+            
 			if (Main.x[1][0] - 1 < 0)
 				break;
 			if (Main.x[1][1] - 1 < 0)
@@ -174,7 +183,9 @@ public class Move implements KeyListener {
 				break;
 			if (blk.rightBlock(1) == true)
 				break;
-			if (blk.bottomBlock(1) == true || blk.fallBlock(1) == true)
+	//		if (blk.bottomBlock(1) == true || blk.fallBlock(1) == true)
+		//		break;
+			if(isDrop[1]==true)
 				break;
 
 			if (Main.x[1][0] + 1 > Main.rowSize - 1)
@@ -207,6 +218,7 @@ public class Move implements KeyListener {
 			if (blk.bottomBlock(1)) {
 				break;
 			}
+			isDrop[1]=true;
 			tmp = Main.colSize;
 			downtobottom = true;
 			findstop = false;
@@ -278,10 +290,25 @@ public class Move implements KeyListener {
 	}
 
 	public void keyReleased(KeyEvent e) {
-		Tetris.speed = 1;
+
 	}
 
 	public void keyTyped(KeyEvent e) {
 	}
+	
+	//////
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	////////
+	
 
 }
