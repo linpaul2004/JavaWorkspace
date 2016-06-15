@@ -29,9 +29,9 @@ public class Main {
 	static int[] attacktime = new int[2];
 	static boolean isClear = false;
 	////////////
-	
-	static int[][] hintx=new int[2][4];
-	static int[][] hinty=new int[2][4];
+
+	static int[][] hintx = new int[2][4];
+	static int[][] hinty = new int[2][4];
 	static int[][] x = new int[2][4];
 	static int[][] y = new int[2][4];
 	static int[] score = new int[2];
@@ -141,8 +141,7 @@ public class Main {
 			frame.add(scoreLabel[1]);
 			scoreLabel[1].setFocusable(false);
 		}
-		
-		
+
 		for (int i = 0; i < rowSize; i++) {
 			for (int j = 2; j < colSize; j++) {
 				lb[0][i][j] = new JLabel();
@@ -160,8 +159,7 @@ public class Main {
 				}
 			}
 		}
-		
-		
+
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 3; j++) {
 				next[0][i][j] = new JLabel();
@@ -244,7 +242,7 @@ public class Main {
 				break;
 			}
 			setHint(0);
-            setHint(1);
+			setHint(1);
 			Tetris.fall();
 
 			////////////////////////////////////////////////////////////////////////
@@ -538,7 +536,7 @@ public class Main {
 			if (loser >= 0) {
 				frame.showLose.setLocation(50 + loser * 720, 100);
 				frame.showLose.setVisible(true);
-				HighScore.setHighscore(score[1 - loser], loser);
+				HighScore.setHighscore(score[0], loser);
 				highscore.setLocationRelativeTo(frame);
 				highscore.setVisible(true);
 			}
@@ -549,13 +547,20 @@ public class Main {
 
 		while (mod.equals("timeMode") == true) {
 			System.out.println("");
-
+			line = 5;
+			scoreLabel[0].setVisible(false);
 			counter.setBackground(SystemColor.control);
 			counter.setText("Time:\n" + (now - before) / 1000);
 			counter.setFont(new Font(counter.getFont().getName(), counter.getFont().getStyle(), 40));
 			counter.setSize(counter.getPreferredSize());
-			counter.setLocation(500, 650);
+			counter.setLocation(500, 400);
 			frame.add(counter);
+			restline.setBackground(SystemColor.control);
+			restline.setText("Rest line:\n" + line);
+			restline.setFont(new Font(restline.getFont().getName(), restline.getFont().getStyle(), 40));
+			restline.setSize(restline.getPreferredSize());
+			restline.setLocation(500, 650);
+			frame.add(restline);
 			restline.setFocusable(false);
 
 			if (startSignal == false) {
@@ -597,6 +602,12 @@ public class Main {
 
 			////////////////////////////////////////////////////////////////////////
 			while (loser == -1 && startSignal) {
+				if (line <= 0) {
+					HighScore.setHighscore((int) (now - before) / 1000, loser);
+					highscore.setLocationRelativeTo(frame);
+					highscore.setVisible(true);
+					break;
+				}
 				if (before == 0)
 					before = System.currentTimeMillis();
 
@@ -604,6 +615,7 @@ public class Main {
 					if (isClear == false) {
 						clear(0);
 					}
+					restline.setText("Rest line:\n" + line);
 					loser = isOver();
 					rot.rotation1 = 0;
 					rand1 = randNext1;
@@ -643,12 +655,16 @@ public class Main {
 			if (loser >= 0) {
 				frame.showLose.setLocation(50 + loser * 720, 100);
 				frame.showLose.setVisible(true);
-				HighScore.setHighscore(score[0], loser);
+				HighScore.setHighscore((int) (now - before) / 1000, 1);
 				highscore.setLocationRelativeTo(frame);
 				highscore.setVisible(true);
+				now = 999;
+				before = 0;
 			}
 			resetGame();
+
 			frame.showLose.setVisible(false);
+
 		}
 	}
 
@@ -721,7 +737,7 @@ public class Main {
 					lb[num][i][j].setIcon(iconhint);
 					break;
 				}
-				
+
 			}
 		}
 	}
@@ -766,7 +782,7 @@ public class Main {
 		boolean hasCombo = false;
 		int combo = 0;
 		int add = 0;
-		
+
 		for (int i = Main.colSize - 1; i >= 0; i--) {
 			needClear = true;
 			for (int j = 0; j < Main.rowSize; j++) {
@@ -776,9 +792,12 @@ public class Main {
 				}
 			}
 			if (needClear) {
-				
+
 				hasCombo = true;
-				line++;
+				if (mod.equals("challenge") == true)
+					line++;
+				else if (mod.equals("timeMode") == true)
+					line--;
 				for (int ii = i; ii >= 1; ii--) {
 					for (int jj = 0; jj < Main.rowSize; jj++) {
 						Main.player[num][jj][ii] = Main.player[num][jj][ii - 1];
@@ -797,7 +816,7 @@ public class Main {
 
 		score[num] += (100 * ((add * (add + 1)) / 2)) * ((combo + 1) / 2);
 		scoreLabel[num].setText("Score:\n" + score[num]);
-		
+
 	}
 
 	//
@@ -981,72 +1000,74 @@ public class Main {
 			break;
 		}
 	}
-/////////////////////////hint	
-	public static void setHint(int num){
-	Block blk=new Block();
-	if (blk.bottomBlock(num) == true || blk.fallBlock(num) == true) return;
 
+	///////////////////////// hint
+	public static void setHint(int num) {
+		Block blk = new Block();
+		if (blk.bottomBlock(num) == true || blk.fallBlock(num) == true)
+			return;
 
-	int tmp = Main.colSize;
-	boolean downtobottom = true;
-	boolean findstop = false;
-	boolean overlap=false;
-	int stx = -1;
+		int tmp = Main.colSize;
+		boolean downtobottom = true;
+		boolean findstop = false;
+		boolean overlap = false;
+		int stx = -1;
 
-	for (int i = 0; i < 4; i++) {
-		for (int j = Main.y[num][i] + 1; j < Main.colSize; j++) {
-			if (Main.x[num][i] != stx && Main.player[num][ Main.x[num][i] ][j] <= 0) {
-				findstop = true;
-				for (int k = j; k < Main.colSize; k++) {
-					if (Main.player[num][Main.x[num][i]][k] > 0) {
-						if (tmp > k - j) {
-							tmp = k - j;
-						}
-						stx = Main.x[num][i];
-						downtobottom = false;
-						j = Main.colSize + 1; // to break from j
-						break; // break from k
-					} // if==1,second search
-					downtobottom = true;
-				} // for k
-				if (downtobottom) {
-					if (tmp > Main.colSize - Main.y[num][i] - 1) {
-						tmp = Main.colSize - Main.y[num][i] - 1;
-					}
-				}
-			} // if==0,first search
-		} // for j
-		if (!findstop) {
-			break;
-		}
-	} // for i      
-
-	for (int i = 0; i < 4; i++) {
-		hinty[num][i]=Main.y[num][i] + tmp;
-		hintx[num][i]=Main.x[num][i];
-	}
-
-	for(int i=0;i<4;i++){
-		overlap=false;
-		for(int j=0;j<4;j++){
-			if(hinty[num][i]==Main.y[num][j]){
-				overlap=true; 
-				break;
-			}				
-		}		
-		if(!overlap)player[num][hintx[num][i]][hinty[num][i]]=-1;
-
-
-	}
-
-	setIcon(num);		
-	}
-
-	public static void deHint(int num){
 		for (int i = 0; i < 4; i++) {
-			if( player[num][hintx[num][i]][hinty[num][i]]<=0 ) player[num][hintx[num][i]][hinty[num][i]]=0;
+			for (int j = Main.y[num][i] + 1; j < Main.colSize; j++) {
+				if (Main.x[num][i] != stx && Main.player[num][Main.x[num][i]][j] <= 0) {
+					findstop = true;
+					for (int k = j; k < Main.colSize; k++) {
+						if (Main.player[num][Main.x[num][i]][k] > 0) {
+							if (tmp > k - j) {
+								tmp = k - j;
+							}
+							stx = Main.x[num][i];
+							downtobottom = false;
+							j = Main.colSize + 1; // to break from j
+							break; // break from k
+						} // if==1,second search
+						downtobottom = true;
+					} // for k
+					if (downtobottom) {
+						if (tmp > Main.colSize - Main.y[num][i] - 1) {
+							tmp = Main.colSize - Main.y[num][i] - 1;
+						}
+					}
+				} // if==0,first search
+			} // for j
+			if (!findstop) {
+				break;
+			}
+		} // for i
+
+		for (int i = 0; i < 4; i++) {
+			hinty[num][i] = Main.y[num][i] + tmp;
+			hintx[num][i] = Main.x[num][i];
+		}
+
+		for (int i = 0; i < 4; i++) {
+			overlap = false;
+			for (int j = 0; j < 4; j++) {
+				if (hinty[num][i] == Main.y[num][j]) {
+					overlap = true;
+					break;
+				}
+			}
+			if (!overlap)
+				player[num][hintx[num][i]][hinty[num][i]] = -1;
+
+		}
+
+		setIcon(num);
+	}
+
+	public static void deHint(int num) {
+		for (int i = 0; i < 4; i++) {
+			if (player[num][hintx[num][i]][hinty[num][i]] <= 0)
+				player[num][hintx[num][i]][hinty[num][i]] = 0;
 		}
 	}
-//////////////////////////////////////////hint end
+	////////////////////////////////////////// hint end
 
 }

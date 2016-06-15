@@ -169,7 +169,7 @@ public class HighScore extends JDialog {
 			output += "\nTime Mode\n";
 			while (readTimeMode.hasNextLine()) {
 				String s = readTimeMode.nextLine();
-				output += "Name:" + readTimeMode.nextLine() + " Score: " + s + "\n";
+				output += "Name:" + readTimeMode.nextLine() + " Time: " + s + "\n";
 			}
 			readTimeMode.close();
 			output += "\nBattle\n";
@@ -229,11 +229,21 @@ public class HighScore extends JDialog {
 		HighScore.clean.setLocation(100, 200);
 		HighScore.close.setLocation(100, 230);
 		String newline = System.lineSeparator();
-		requestName();
+		boolean ranked = true;
+		if (mode.equals("timeMode") && loser == 1) {
+			ranked = false;
+		}
+		if (ranked) {
+			requestName();
+		}
 		if (mode.equals("battle")) {
 			label.setText(name + " wins!" + "\nScore:" + score);
-		} else {
+		} else if (mode.equals("timeMode") == false) {
 			label.setText("Your Score:" + score);
+		} else if (!ranked) {
+			label.setText("You Lose\nYourTime:" + score);
+		} else {
+			label.setText("Your Time:" + score);
 		}
 		label.setSize(label.getPreferredSize());
 		File fileHigh = new File(mode + ".txt");
@@ -251,19 +261,31 @@ public class HighScore extends JDialog {
 			Scanner readin = new Scanner(new FileInputStream(mode + ".txt"));
 			while (readin.hasNextLine()) {
 				int s = Integer.parseInt(readin.nextLine());
-				if (s >= score) {
-					output += "" + s + newline + readin.nextLine() + newline;
+				if (mode.equals("timeMode")) {
+					if (s <= score || (!ranked)) {
+						output += "" + s + newline + readin.nextLine() + newline;
+					} else {
+						output += "" + score + newline + name + newline;
+						output += "" + s + newline + readin.nextLine() + newline;
+						last = false;
+						break;
+					}
 				} else {
-					output += "" + score + newline + name + newline;
-					output += "" + s + newline + readin.nextLine() + newline;
-					last = false;
-					break;
+					if (s >= score) {
+						output += "" + s + newline + readin.nextLine() + newline;
+					} else {
+						output += "" + score + newline + name + newline;
+						output += "" + s + newline + readin.nextLine() + newline;
+						last = false;
+						break;
+					}
 				}
+
 			}
 			while (readin.hasNextLine()) {
 				output += "" + readin.nextLine() + newline + readin.nextLine() + newline;
 			}
-			if (last) {
+			if (last && ranked) {
 				output += "" + score + newline + name + newline;
 			}
 			readin.close();
@@ -282,7 +304,11 @@ public class HighScore extends JDialog {
 		Scanner strScanner = new Scanner(output);
 		while (strScanner.hasNextLine()) {
 			String s = strScanner.nextLine();
-			realoutput += "Name:" + strScanner.nextLine() + " Score: " + s + "\n";
+			if (mode.equals("timeMode")) {
+				realoutput += "Name:" + strScanner.nextLine() + " Time: " + s + "\n";
+			} else {
+				realoutput += "Name:" + strScanner.nextLine() + " Score: " + s + "\n";
+			}
 		}
 		strScanner.close();
 		area.setText(realoutput);
