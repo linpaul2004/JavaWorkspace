@@ -216,6 +216,8 @@ public class Main {
 
 			while (mod.equals("battle") == true) {
 				System.out.print("");
+				deHint(0);
+				deHint(1);
 				if (isback == true) {
 					frame.battlePlayBack();
 					break;
@@ -297,7 +299,7 @@ public class Main {
 						if (isClear == false) {
 							clear(0);
 						}
-						
+
 						attack(0);
 						loser = isOver();
 						rot.rotation1 = 0;
@@ -307,6 +309,8 @@ public class Main {
 						setNext(0, randNext1);
 						isClear = false;
 						mov.isDrop[0] = false;
+						deHint(0);
+
 						switch (rand1) {
 						case 1:
 							new TShape(0);
@@ -345,9 +349,10 @@ public class Main {
 						current2 = rand2;
 						randNext2 = ran.nextInt(7) + 1;
 						setNext(1, randNext2);
-						rot.rotation2 = 0;						
+						rot.rotation2 = 0;
 						isClear2 = false;
 						mov.isDrop[1] = false;
+						deHint(1);
 						switch (rand2) {
 						case 1:
 							new TShape(1);
@@ -406,6 +411,7 @@ public class Main {
 				current1 = rand1;
 				setNext(0, randNext1);
 				mov.isDrop[0] = false;
+				deHint(0);
 				switch (rand1) {
 				case 1:
 					new TShape(0);
@@ -451,6 +457,7 @@ public class Main {
 						setNext(0, randNext1);
 						isClear = false;
 						mov.isDrop[0] = false;
+						deHint(0);
 						switch (rand1) {
 						case 1:
 							new TShape(0);
@@ -512,7 +519,7 @@ public class Main {
 				rand1 = ran.nextInt(7) + 1;
 				current1 = rand1;
 				setNext(0, randNext1);
-
+				deHint(0);
 				switch (rand1) {
 				case 1:
 					new TShape(0);
@@ -569,6 +576,7 @@ public class Main {
 						setNext(0, randNext1);
 						isClear = false;
 						mov.isDrop[0] = false;
+						deHint(0);
 						switch (rand1) {
 						case 1:
 							new TShape(0);
@@ -632,7 +640,7 @@ public class Main {
 				rand1 = ran.nextInt(7) + 1;
 				current1 = rand1;
 				setNext(0, randNext1);
-
+				deHint(0);
 				switch (rand1) {
 				case 1:
 					new TShape(0);
@@ -689,6 +697,7 @@ public class Main {
 						setNext(0, randNext1);
 						isClear = false;
 						mov.isDrop[0] = false;
+						deHint(0);
 						switch (rand1) {
 						case 1:
 							new TShape(0);
@@ -749,12 +758,14 @@ public class Main {
 		//////////
 		attacktime[0] = attacktime[1] = 0;
 		//////////
-		pauseTime=0; 
+		pauseTime = 0;
 		Tetris.speed = 1;
 		demap(0);
-		if (Main.mod.equals("battle") == true) 
+		deHint(0);
+		if (Main.mod.equals("battle") == true) {
 			demap(1);
-			
+			deHint(1);
+		}
 		startSignal = false;
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < rowSize; j++) {
@@ -763,19 +774,20 @@ public class Main {
 				}
 			}
 		}
+
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 4; j++) {
 				x[i][j] = 0;
 				y[i][j] = 0;
-				hintx[i][j] = 0;
-				hinty[i][j] = 0;
+				// hintx[i][j] = 0;
+				// hinty[i][j] = 0;
 			}
 		}
 		setHold(0, 0);
 		setNext(0, 0);
 		setIcon(0);
 		deHint(0);
-	
+
 		if (Main.mod.equals("battle") == true) {
 			demap(1);
 			setIcon(1);
@@ -924,11 +936,14 @@ public class Main {
 
 				isEmpty = true;
 				tmp = 0;
-				/*
-				 * for (int i = 0; i < 4; i++) { tmp = Main.y[1][i] + up; if
-				 * (Main.player[1][Main.x[1][i]][tmp] > 0) { isEmpty = false; }
-				 * }
-				 */
+
+				for (int i = 0; i < 4; i++) {
+					tmp = Main.y[1][i] + up;
+					if (Main.player[1][Main.x[1][i]][tmp] > 0) {
+						isEmpty = false;
+					}
+				}
+
 				if (isEmpty == false) {
 					while (blk.fallBlock(1) == false) {
 						for (int i = 0; i < 4; i++) {
@@ -937,7 +952,7 @@ public class Main {
 					}
 					deHint(1);
 					map(1, Main.current2);
-					setHint(1);
+					// setHint(1);
 
 				}
 				// up
@@ -959,7 +974,7 @@ public class Main {
 				if (isEmpty == true) {
 					deHint(1);
 					map(1, Main.current2);
-					setHint(1);
+					// setHint(1);
 				}
 			}
 
@@ -989,7 +1004,7 @@ public class Main {
 					}
 					deHint(0);
 					map(0, Main.current1);
-					setHint(0);
+					// setHint(0);
 				}
 
 				//
@@ -1123,6 +1138,7 @@ public class Main {
 				new RightZ(0);
 				break;
 			}
+			deHint(0);
 		} else {
 			Main.nowHold2 = current2;
 			if (assign == -1) {
@@ -1156,6 +1172,7 @@ public class Main {
 				new RightZ(1);
 				break;
 			}
+			deHint(1);
 		}
 	}
 
@@ -1293,6 +1310,7 @@ public class Main {
 			if (player[num][hintx[num][i]][hinty[num][i]] <= 0)
 				player[num][hintx[num][i]][hinty[num][i]] = 0;
 		}
+		setIcon(num);
 	}
 	////////////////////////////////////////// hint end
 
