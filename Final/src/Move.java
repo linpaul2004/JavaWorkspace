@@ -297,7 +297,6 @@ public class Move implements KeyListener {
 			Main.map(1, Main.current2);
 			Main.clear(1);
 			Main.isClear2 = true;
-			Main.isClear = true;
 			if (Main.mod.equals("battle") == true)
 				Main.attack(1);
 			Main.setIcon(1);

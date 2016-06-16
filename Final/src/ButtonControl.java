@@ -24,7 +24,7 @@ public class ButtonControl implements ActionListener {
 			Main.loser = -1;
 			Main.pause = false;
 			Main.frame.gameStart.setText("Abort");
-			Main.frame.gameStart.setSize(Main.frame.gameStart.getPreferredSize());
+			Main.frame.gameStart.setSize(Main.frame.pause.getPreferredSize());
 			Main.frame.pause.setText("Pause");
 			Main.frame.pause.setSize(Main.frame.pause.getPreferredSize());
 			Main.isback = false;
@@ -68,7 +68,7 @@ public class ButtonControl implements ActionListener {
 			Main.startSignal = false;
 			Main.loser = -2;
 			Main.frame.gameStart.setText("Start");
-			Main.frame.gameStart.setSize(Main.frame.gameStart.getPreferredSize());
+			Main.frame.gameStart.setSize(Main.frame.pause.getPreferredSize());
 		} else if (e.getActionCommand().equals("Close")) {
 			Main.highscore.setVisible(false);
 		} else if (e.getActionCommand().equals("Pause") || e.getActionCommand().equals("Continue")) {

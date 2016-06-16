@@ -39,17 +39,17 @@ public class Component extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 
-		gameStart.setText("Start");
-		gameStart.setSize(gameStart.getPreferredSize());
-		gameStart.setLocation(500, 550);
-		gameStart.addActionListener(new ButtonControl());
-		gameStart.setVisible(false);
-
 		pause.setText("Pause");
 		pause.setSize(pause.getPreferredSize());
 		pause.setLocation(500, 580);
 		pause.addActionListener(new ButtonControl());
 		pause.setVisible(false);
+		
+		gameStart.setText("Start");
+		gameStart.setSize(pause.getPreferredSize());
+		gameStart.setLocation(500, 550);
+		gameStart.addActionListener(new ButtonControl());
+		gameStart.setVisible(false);
 
 		single.setText("Single");
 		single.setSize(single.getPreferredSize());
@@ -95,25 +95,25 @@ public class Component extends JFrame {
 
 		challenge.setText("Challenge");
 		challenge.setSize(challenge.getPreferredSize());
-		challenge.setLocation(getSize().width / 2 - rank.getSize().width / 2, 550);
+		challenge.setLocation(getSize().width / 2 - rank.getSize().width / 2, 350);
 		challenge.addActionListener(new ButtonControl());
 		challenge.setVisible(false);
 
 		classic.setText("Classic");
 		classic.setSize(challenge.getPreferredSize());
-		classic.setLocation(getSize().width / 2 - rank.getSize().width / 2, 500);
+		classic.setLocation(getSize().width / 2 - rank.getSize().width / 2, 300);
 		classic.addActionListener(new ButtonControl());
 		classic.setVisible(false);
 
 		timeMode.setText("Time");
 		timeMode.setSize(challenge.getPreferredSize());
-		timeMode.setLocation(getSize().width / 2 - rank.getSize().width / 2, 600);
+		timeMode.setLocation(getSize().width / 2 - rank.getSize().width / 2, 400);
 		timeMode.addActionListener(new ButtonControl());
 		timeMode.setVisible(false);
 
 		back.setText("Back");
 		back.setSize(challenge.getPreferredSize());
-		back.setLocation(getSize().width / 2 - rank.getSize().width / 2, 650);
+		back.setLocation(getSize().width / 2 - rank.getSize().width / 2, 450);
 		back.addActionListener(new ButtonControl());
 		back.setVisible(false);
 
@@ -255,7 +255,7 @@ public class Component extends JFrame {
 		counter.setVisible(false);
 		next1.setVisible(true);
 		hold1.setVisible(true);
-		back.setLocation(getSize().width / 2 - rank.getSize().width / 2, 650);
+		back.setLocation(getSize().width / 2 - rank.getSize().width / 2, 450);
 	}
 
 	public void singleChooseBack() {
@@ -306,7 +306,7 @@ public class Component extends JFrame {
 		backGround.setVisible(true);
 		hold1.setVisible(false);
 		pause.setVisible(false);
-		back.setLocation(getSize().width / 2 - rank.getSize().width / 2, 650);
+		back.setLocation(getSize().width / 2 - rank.getSize().width / 2, 450);
 		back.setVisible(true);
 		setSize(500, 800);
 		for (int i = 0; i < Main.rowSize; i++) {

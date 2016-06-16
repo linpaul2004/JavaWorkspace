@@ -297,9 +297,7 @@ public class Main {
 						if (isClear == false) {
 							clear(0);
 						}
-						if (isClear2 == false) {
-							clear(1);
-						}
+						
 						attack(0);
 						loser = isOver();
 						rot.rotation1 = 0;
@@ -308,7 +306,6 @@ public class Main {
 						randNext1 = ran.nextInt(7) + 1;
 						setNext(0, randNext1);
 						isClear = false;
-						isClear2 = false;
 						mov.isDrop[0] = false;
 						switch (rand1) {
 						case 1:
@@ -337,7 +334,7 @@ public class Main {
 						Main.isHold1 = false;
 						Tetris.fall();
 					} else {
-						if (isClear == false) {
+						if (isClear2 == false) {
 							clear(1);
 						}
 						loser = isOver();
@@ -348,8 +345,7 @@ public class Main {
 						current2 = rand2;
 						randNext2 = ran.nextInt(7) + 1;
 						setNext(1, randNext2);
-						rot.rotation2 = 0;
-						isClear = false;
+						rot.rotation2 = 0;						
 						isClear2 = false;
 						mov.isDrop[1] = false;
 						switch (rand2) {
@@ -749,13 +745,16 @@ public class Main {
 			scoreLabel[1].setText("Score:\n" + score[1]);
 		}
 		isHold1 = isHold2 = false;
-		pauseTime = 0;
 		nowHold1 = nowHold2 = -1;
 		//////////
 		attacktime[0] = attacktime[1] = 0;
 		//////////
-
+		pauseTime=0; 
 		Tetris.speed = 1;
+		demap(0);
+		if (Main.mod.equals("battle") == true) 
+			demap(1);
+			
 		startSignal = false;
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < rowSize; j++) {
@@ -776,7 +775,9 @@ public class Main {
 		setNext(0, 0);
 		setIcon(0);
 		deHint(0);
+	
 		if (Main.mod.equals("battle") == true) {
+			demap(1);
 			setIcon(1);
 			deHint(1);
 			setHold(1, 0);
