@@ -7,15 +7,15 @@ public abstract class Tetris {
 	public static int fall() {
 		Block blk = new Block();
 		System.out.print("");
-		
+
 		while (true) {
 			System.out.print("");
 			if (Main.isClear == true)
 				return 0;
-			
-			if(Main.mod.equals("timeMode") == true){
+
+			if (Main.mod.equals("timeMode") == true) {
 				Main.now = System.currentTimeMillis();
-				Main.frame.counter.setText("Time:\n" + (Main.now-Main.before-Main.pauseTime)/1000 );
+				Main.frame.counter.setText("Time:\n" + (Main.now - Main.before - Main.pauseTime) / 1000);
 			}
 			if (blk.bottomBlock(0) == true) {
 				return 0;

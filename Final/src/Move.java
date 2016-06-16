@@ -150,6 +150,30 @@ public class Move implements KeyListener {
 				before1 = now1;
 			}
 			break;
+		case KeyEvent.VK_F:
+			if (Main.isHold1) {
+				break;
+			}
+			Main.demap(0);
+			Main.skip(0, Main.nowHold1);
+			Main.setIcon(0);
+			Main.deHint(0);
+			Main.setHint(0);
+			Main.setNext(0, Main.randNext1);
+			Main.isHold1 = true;
+			break;
+		case KeyEvent.VK_SLASH:
+			if (Main.isHold2) {
+				break;
+			}
+			Main.demap(1);
+			Main.skip(1, Main.nowHold2);
+			Main.setIcon(1);
+			Main.deHint(1);
+			Main.setHint(1);
+			Main.setNext(1, Main.randNext2);
+			Main.isHold2 = true;
+			break;
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		case KeyEvent.VK_LEFT:
 			if (Main.mod.equals("battle") == false)

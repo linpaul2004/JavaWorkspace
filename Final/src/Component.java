@@ -56,32 +56,30 @@ public class Component extends JFrame {
 		rank.setSize(single.getPreferredSize());
 		rank.setLocation(getSize().width / 2 - rank.getSize().width / 2, 650);
 		rank.addActionListener(new ButtonControl());
-		
+
 		challenge.setText("Challenge");
 		challenge.setSize(challenge.getPreferredSize());
 		challenge.setLocation(getSize().width / 2 - rank.getSize().width / 2, 550);
 		challenge.addActionListener(new ButtonControl());
 		challenge.setVisible(false);
-		
+
 		classic.setText("Classic");
 		classic.setSize(challenge.getPreferredSize());
 		classic.setLocation(getSize().width / 2 - rank.getSize().width / 2, 500);
 		classic.addActionListener(new ButtonControl());
 		classic.setVisible(false);
-		
+
 		timeMode.setText("Time");
 		timeMode.setSize(challenge.getPreferredSize());
 		timeMode.setLocation(getSize().width / 2 - rank.getSize().width / 2, 600);
 		timeMode.addActionListener(new ButtonControl());
 		timeMode.setVisible(false);
-		
+
 		back.setText("Back");
 		back.setSize(challenge.getPreferredSize());
 		back.setLocation(getSize().width / 2 - rank.getSize().width / 2, 650);
 		back.addActionListener(new ButtonControl());
 		back.setVisible(false);
-		
-		
 
 		showLose.setIcon(iconLose);
 		showLose.setSize(showLose.getPreferredSize());
@@ -90,7 +88,7 @@ public class Component extends JFrame {
 		title.setIcon(iconTitle);
 		title.setSize(title.getPreferredSize());
 		title.setLocation(getSize().width / 2 - title.getSize().width / 2, -200);
-		
+
 		restline.setBackground(SystemColor.control);
 		restline.setText("Rest line:\n" + 3);
 		restline.setFont(new Font(restline.getFont().getName(), restline.getFont().getStyle(), 40));
@@ -98,7 +96,7 @@ public class Component extends JFrame {
 		restline.setLocation(500, 650);
 		restline.setFocusable(false);
 		restline.setVisible(false);
-		
+
 		counter.setBackground(SystemColor.control);
 		counter.setText("Time:\n" + (Main.now - Main.before) / 1000);
 		counter.setFont(new Font(counter.getFont().getName(), counter.getFont().getStyle(), 40));
@@ -106,7 +104,7 @@ public class Component extends JFrame {
 		counter.setLocation(500, 400);
 		counter.setFocusable(false);
 		counter.setVisible(false);
-		
+
 		add(gameStart);
 		add(rank);
 		add(single);
@@ -132,9 +130,8 @@ public class Component extends JFrame {
 		challenge.setFocusable(false);
 		timeMode.setFocusable(false);
 		back.setFocusable(false);
-		
-		for(int i = -200; i<300; i++)
-		{
+
+		for (int i = -200; i < 300; i++) {
 			try {
 				Thread.sleep(1);
 			} catch (InterruptedException e) {
@@ -156,9 +153,8 @@ public class Component extends JFrame {
 		challenge.setVisible(false);
 		timeMode.setVisible(false);
 		back.setVisible(true);
-		back.setLocation(580,50);
-		
-		
+		back.setLocation(580, 50);
+
 		for (int i = 0; i < Main.rowSize; i++) {
 			for (int j = 2; j < Main.colSize; j++) {
 				Main.lb[0][i][j].setVisible(true);
@@ -168,25 +164,27 @@ public class Component extends JFrame {
 				}
 			}
 		}
-		
+
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 3; j++) {
-				
+
 				Main.next[0][i][j].setVisible(true);
+				Main.holding[0][i][j].setVisible(true);
 
 				if (Main.mod.equals("battle") == true) {
 					Main.next[1][i][j].setVisible(true);
+					Main.holding[1][i][j].setVisible(true);
 				}
 			}
 		}
-		
+
 		Main.scoreLabel[0].setVisible(true);
 		if (Main.mod.equals("battle") == true) {
 			Main.scoreLabel[1].setVisible(true);
 		}
 	}
-	
-	public void singleSetting(){
+
+	public void singleSetting() {
 		pause.setVisible(false);
 		gameStart.setVisible(false);
 		rank.setVisible(false);
@@ -201,11 +199,11 @@ public class Component extends JFrame {
 		counter.setVisible(false);
 		back.setLocation(getSize().width / 2 - rank.getSize().width / 2, 650);
 	}
-	
-	public void singleChooseBack(){
+
+	public void singleChooseBack() {
 		gameStart.setVisible(false);
 		pause.setVisible(false);
-		setSize(500,800);
+		setSize(500, 800);
 		rank.setVisible(true);
 		single.setVisible(true);
 		battle.setVisible(true);
@@ -216,9 +214,8 @@ public class Component extends JFrame {
 		back.setVisible(false);
 		restline.setVisible(false);
 		counter.setVisible(false);
-		
-		for(int i = -200; i<300; i++)
-		{
+
+		for (int i = -200; i < 300; i++) {
 			try {
 				Thread.sleep(1);
 			} catch (InterruptedException e) {
@@ -230,9 +227,9 @@ public class Component extends JFrame {
 		Main.isback = false;
 		Main.mod = "";
 	}
-	
-	public void singlePlayBack(){
-		setSize(500,800);
+
+	public void singlePlayBack() {
+		setSize(500, 800);
 		Main.mod = "single";
 		rank.setVisible(false);
 		single.setVisible(false);
@@ -245,29 +242,30 @@ public class Component extends JFrame {
 		pause.setVisible(false);
 		back.setLocation(getSize().width / 2 - rank.getSize().width / 2, 650);
 		back.setVisible(true);
-		setSize(500,800);
+		setSize(500, 800);
 		for (int i = 0; i < Main.rowSize; i++) {
 			for (int j = 2; j < Main.colSize; j++) {
 				Main.lb[0][i][j].setVisible(false);
 
 			}
 		}
-		
+
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 3; j++) {
-				
+
 				Main.next[0][i][j].setVisible(false);
+				Main.holding[0][i][j].setVisible(false);
 
 			}
 		}
-		
+
 		Main.scoreLabel[0].setVisible(false);
 		Main.isback = false;
 		repaint();
 	}
-	
-	public void battlePlayBack(){
-		setSize(500,800);
+
+	public void battlePlayBack() {
+		setSize(500, 800);
 		gameStart.setVisible(false);
 		pause.setVisible(false);
 		rank.setVisible(true);
@@ -278,26 +276,28 @@ public class Component extends JFrame {
 		challenge.setVisible(false);
 		timeMode.setVisible(false);
 		back.setVisible(false);
-		setSize(500,800);
+		setSize(500, 800);
 		for (int i = 0; i < Main.rowSize; i++) {
 			for (int j = 2; j < Main.colSize; j++) {
 				Main.lb[0][i][j].setVisible(false);
 				Main.lb[1][i][j].setVisible(false);
 			}
 		}
-		
+
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 3; j++) {
-				
+
 				Main.next[0][i][j].setVisible(false);
 				Main.next[1][i][j].setVisible(false);
+				Main.holding[0][i][j].setVisible(false);
+				Main.holding[1][i][j].setVisible(false);
 
 			}
 		}
-		
+
 		Main.scoreLabel[0].setVisible(false);
 		Main.scoreLabel[1].setVisible(false);
-		
+
 		repaint();
 		Main.isback = false;
 		Main.mod = "";
