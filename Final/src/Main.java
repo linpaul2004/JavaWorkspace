@@ -28,7 +28,7 @@ public class Main {
 	static ImageIcon iconbrick = new ImageIcon("brick.png");
 	static boolean attack0, attack1;
 	static int[] attacktime = new int[2];
-	static boolean isClear = false;
+	static boolean isClear = false, isClear2 = false;
 	////////////
 
 	static int[][] hintx = new int[2][4];
@@ -54,13 +54,13 @@ public class Main {
 	static long pauseTime = 0;
 	static boolean isback = false;
 	static boolean isHold1 = false, isHold2 = false;
+	static Rotate rot = new Rotate();
 	// static JTextArea counter = new JTextArea();
 
 	public static void main(String[] args) {
 
 		Random ran = new Random();
 		Move mov = new Move();
-		Rotate rot = new Rotate();
 		SoundTry sound = new SoundTry();
 		sound.start();
 		frame.addKeyListener(mov);
@@ -297,6 +297,9 @@ public class Main {
 						if (isClear == false) {
 							clear(0);
 						}
+						if (isClear2 == false) {
+							clear(1);
+						}
 						attack(0);
 						loser = isOver();
 						rot.rotation1 = 0;
@@ -305,6 +308,7 @@ public class Main {
 						randNext1 = ran.nextInt(7) + 1;
 						setNext(0, randNext1);
 						isClear = false;
+						isClear2 = false;
 						mov.isDrop[0] = false;
 						switch (rand1) {
 						case 1:
@@ -346,6 +350,7 @@ public class Main {
 						setNext(1, randNext2);
 						rot.rotation2 = 0;
 						isClear = false;
+						isClear2 = false;
 						mov.isDrop[1] = false;
 						switch (rand2) {
 						case 1:
@@ -744,6 +749,7 @@ public class Main {
 			scoreLabel[1].setText("Score:\n" + score[1]);
 		}
 		isHold1 = isHold2 = false;
+		pauseTime = 0;
 		nowHold1 = nowHold2 = -1;
 		//////////
 		attacktime[0] = attacktime[1] = 0;
@@ -766,11 +772,15 @@ public class Main {
 				hinty[i][j] = 0;
 			}
 		}
+		setHold(0, 0);
+		setNext(0, 0);
 		setIcon(0);
 		deHint(0);
 		if (Main.mod.equals("battle") == true) {
 			setIcon(1);
 			deHint(1);
+			setHold(1, 0);
+			setNext(1, 0);
 		}
 	}
 

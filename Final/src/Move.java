@@ -151,28 +151,35 @@ public class Move implements KeyListener {
 			}
 			break;
 		case KeyEvent.VK_F:
-			if (Main.isHold1) {
-				break;
+			synchronized (Main.frame) {
+				if (Main.isHold1) {
+					break;
+				}
+				Main.rot.rotation1 = 0;
+				Main.demap(0);
+				Main.skip(0, Main.nowHold1);
+				Main.setIcon(0);
+				Main.deHint(0);
+				Main.setHint(0);
+				Main.setNext(0, Main.randNext1);
+				Main.isHold1 = true;
 			}
-			Main.demap(0);
-			Main.skip(0, Main.nowHold1);
-			Main.setIcon(0);
-			Main.deHint(0);
-			Main.setHint(0);
-			Main.setNext(0, Main.randNext1);
-			Main.isHold1 = true;
 			break;
 		case KeyEvent.VK_SLASH:
-			if (Main.isHold2) {
-				break;
+			synchronized (Main.frame) {
+				if (Main.isHold2 || Main.mod.equals("battle") == false) {
+					break;
+				}
+				Main.rot.rotation2 = 0;
+				Main.demap(1);
+				Main.skip(1, Main.nowHold2);
+				Main.setIcon(1);
+				Main.deHint(1);
+				Main.setHint(1);
+				Main.setNext(1, Main.randNext2);
+				Main.isHold2 = true;
 			}
-			Main.demap(1);
-			Main.skip(1, Main.nowHold2);
-			Main.setIcon(1);
-			Main.deHint(1);
-			Main.setHint(1);
-			Main.setNext(1, Main.randNext2);
-			Main.isHold2 = true;
+
 			break;
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		case KeyEvent.VK_LEFT:
@@ -289,6 +296,7 @@ public class Move implements KeyListener {
 
 			Main.map(1, Main.current2);
 			Main.clear(1);
+			Main.isClear2 = true;
 			Main.isClear = true;
 			if (Main.mod.equals("battle") == true)
 				Main.attack(1);

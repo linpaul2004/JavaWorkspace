@@ -34,6 +34,10 @@ public class ButtonControl implements ActionListener {
 			Main.highscore.setLocationRelativeTo(Main.frame);
 			Main.highscore.setVisible(true);
 			Main.isback = false;
+		} else if (e.getActionCommand().equals("Rule")) {
+			Main.frame.rulesetting(false);
+		} else if (e.getActionCommand().equals("End")) {
+			Main.frame.rulesetting(true);
 		} else if (e.getActionCommand().equals("Classic")) {
 			Main.mod = "classic";
 			Main.isback = false;

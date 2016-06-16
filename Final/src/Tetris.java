@@ -29,6 +29,9 @@ public abstract class Tetris {
 			if (blk.fallBlock(1) == true && Main.mod.equals("battle") == true) {
 				return 1;
 			}
+			if (Main.isClear2 == true) {
+				return 1;
+			}
 			//
 			/////////////////////////////////
 			Main.demap(0);

@@ -12,6 +12,8 @@ public class Component extends JFrame {
 	private static final long serialVersionUID = 1L;
 	JButton gameStart = new JButton();
 	JButton rank = new JButton();
+	JButton rule = new JButton();
+	JButton end = new JButton();
 	JButton single = new JButton();
 	JButton battle = new JButton();
 	JButton pause = new JButton();
@@ -20,13 +22,17 @@ public class Component extends JFrame {
 	JButton timeMode = new JButton();
 	JButton back = new JButton();
 	JLabel showLose = new JLabel();
-	JLabel title = new JLabel();
 	JLabel next1 = new JLabel("1P Next"), next2 = new JLabel("2P Next");
 	JLabel hold1 = new JLabel("1P Hold"), hold2 = new JLabel("2P Hold");
+	JLabel backGround = new JLabel();
+	JLabel title = new JLabel();
+	JLabel ruleP = new JLabel();
 	JTextArea restline = new JTextArea();
 	JTextArea counter = new JTextArea();
 	ImageIcon iconLose = new ImageIcon("lose.jpg");
 	ImageIcon iconTitle = new ImageIcon("title.jpg");
+	ImageIcon iconRule = new ImageIcon("rule.jpg");
+	ImageIcon iconBackGround = new ImageIcon("backGround.jpg");
 
 	public Component() {
 		setSize(500, 800);
@@ -60,6 +66,33 @@ public class Component extends JFrame {
 		rank.setLocation(getSize().width / 2 - rank.getSize().width / 2, 650);
 		rank.addActionListener(new ButtonControl());
 
+		rule.setText("Rule");
+		rule.setSize(single.getPreferredSize());
+		rule.setLocation(getSize().width / 2 - single.getSize().width / 2, 700);
+		rule.addActionListener(new ButtonControl());
+
+		end.setText("End");
+		end.setSize(single.getPreferredSize());
+		end.setLocation(getSize().width / 2 - single.getSize().width / 2, 725);
+		end.addActionListener(new ButtonControl());
+		end.setVisible(false);
+
+		next1.setSize(next1.getPreferredSize());
+		next1.setLocation(500, 80);
+
+		next2.setSize(next2.getPreferredSize());
+		next2.setLocation(1200, 80);
+
+		hold1.setSize(hold1.getPreferredSize());
+		hold1.setLocation(500, 230);
+
+		hold2.setSize(hold2.getPreferredSize());
+		hold2.setLocation(1200, 230);
+
+		backGround.setIcon(iconBackGround);
+		backGround.setSize(getSize().width, getSize().height);
+		backGround.setLocation(0, 0);
+
 		challenge.setText("Challenge");
 		challenge.setSize(challenge.getPreferredSize());
 		challenge.setLocation(getSize().width / 2 - rank.getSize().width / 2, 550);
@@ -92,17 +125,9 @@ public class Component extends JFrame {
 		title.setSize(title.getPreferredSize());
 		title.setLocation(getSize().width / 2 - title.getSize().width / 2, -200);
 
-		next1.setSize(next1.getPreferredSize());
-		next1.setLocation(500, 80);
-
-		next2.setSize(next2.getPreferredSize());
-		next2.setLocation(1200, 80);
-
-		hold1.setSize(hold1.getPreferredSize());
-		hold1.setLocation(500, 230);
-
-		hold2.setSize(hold2.getPreferredSize());
-		hold2.setLocation(1200, 230);
+		ruleP.setIcon(iconRule);
+		ruleP.setSize(ruleP.getPreferredSize());
+		ruleP.setLocation(getSize().width / 2 - ruleP.getSize().width / 2 - 10, -775);
 
 		restline.setBackground(SystemColor.control);
 		restline.setText("Rest line:\n" + 3);
@@ -120,8 +145,11 @@ public class Component extends JFrame {
 		counter.setFocusable(false);
 		counter.setVisible(false);
 
+		add(ruleP);
 		add(gameStart);
 		add(rank);
+		add(rule);
+		add(end);
 		add(single);
 		add(battle);
 		add(showLose);
@@ -137,11 +165,14 @@ public class Component extends JFrame {
 		add(next2);
 		add(hold1);
 		add(hold2);
+		add(backGround);
 		//////////////////////////////////////////////////////
 		setLayout(null);
 		setVisible(true);
 		gameStart.setFocusable(false);
 		rank.setFocusable(false);
+		rule.setFocusable(false);
+		end.setFocusable(false);
 		single.setFocusable(false);
 		battle.setFocusable(false);
 		pause.setFocusable(false);
@@ -165,11 +196,14 @@ public class Component extends JFrame {
 		gameStart.setVisible(true);
 		pause.setVisible(true);
 		rank.setVisible(false);
+		rule.setVisible(false);
+		end.setFocusable(false);
 		single.setVisible(false);
 		battle.setVisible(false);
 		title.setVisible(false);
 		classic.setVisible(false);
 		challenge.setVisible(false);
+		backGround.setVisible(false);
 		timeMode.setVisible(false);
 		back.setVisible(true);
 		back.setLocation(580, 50);
@@ -207,11 +241,14 @@ public class Component extends JFrame {
 		pause.setVisible(false);
 		gameStart.setVisible(false);
 		rank.setVisible(false);
+		rule.setVisible(false);
+		end.setFocusable(false);
 		single.setVisible(false);
 		battle.setVisible(false);
 		title.setVisible(false);
 		classic.setVisible(true);
 		challenge.setVisible(true);
+		backGround.setVisible(true);
 		timeMode.setVisible(true);
 		back.setVisible(true);
 		restline.setVisible(false);
@@ -226,10 +263,13 @@ public class Component extends JFrame {
 		pause.setVisible(false);
 		setSize(500, 800);
 		rank.setVisible(true);
+		rule.setVisible(true);
+		end.setFocusable(false);
 		single.setVisible(true);
 		battle.setVisible(true);
 		title.setVisible(true);
 		classic.setVisible(false);
+		backGround.setVisible(true);
 		challenge.setVisible(false);
 		timeMode.setVisible(false);
 		back.setVisible(false);
@@ -253,6 +293,8 @@ public class Component extends JFrame {
 		setSize(500, 800);
 		Main.mod = "single";
 		rank.setVisible(false);
+		rule.setVisible(false);
+		end.setFocusable(false);
 		single.setVisible(false);
 		battle.setVisible(false);
 		title.setVisible(false);
@@ -260,11 +302,12 @@ public class Component extends JFrame {
 		challenge.setVisible(true);
 		timeMode.setVisible(true);
 		gameStart.setVisible(false);
+		next1.setVisible(false);
+		backGround.setVisible(true);
+		hold1.setVisible(false);
 		pause.setVisible(false);
 		back.setLocation(getSize().width / 2 - rank.getSize().width / 2, 650);
 		back.setVisible(true);
-		next1.setVisible(false);
-		hold1.setVisible(false);
 		setSize(500, 800);
 		for (int i = 0; i < Main.rowSize; i++) {
 			for (int j = 2; j < Main.colSize; j++) {
@@ -292,17 +335,20 @@ public class Component extends JFrame {
 		gameStart.setVisible(false);
 		pause.setVisible(false);
 		rank.setVisible(true);
+		rule.setVisible(true);
+		end.setFocusable(false);
 		single.setVisible(true);
 		battle.setVisible(true);
 		title.setVisible(true);
 		classic.setVisible(false);
 		challenge.setVisible(false);
-		timeMode.setVisible(false);
-		back.setVisible(false);
 		next1.setVisible(false);
 		hold1.setVisible(false);
 		next2.setVisible(false);
+		backGround.setVisible(true);
 		hold2.setVisible(false);
+		timeMode.setVisible(false);
+		back.setVisible(false);
 		setSize(500, 800);
 		for (int i = 0; i < Main.rowSize; i++) {
 			for (int j = 2; j < Main.colSize; j++) {
@@ -328,5 +374,32 @@ public class Component extends JFrame {
 		repaint();
 		Main.isback = false;
 		Main.mod = "";
+	}
+
+	public void rulesetting(boolean isRuleShow) {
+		if (isRuleShow) {
+			rank.setVisible(true);
+			rule.setVisible(true);
+			single.setVisible(true);
+			battle.setVisible(true);
+			ruleP.setLocation(getSize().width / 2 - ruleP.getSize().width / 2 - 10, -775);
+			end.setVisible(false);
+		} else {
+			rank.setVisible(false);
+			rule.setVisible(false);
+			single.setVisible(false);
+			battle.setVisible(false);
+			// for(int i = -775; i<=25; i+=5)
+			// {
+			// try {
+			// Thread.sleep(10);
+			// } catch (InterruptedException e) {
+			// // TODO Auto-generated catch block
+			// e.printStackTrace();
+			// }
+			// }
+			ruleP.setLocation(getSize().width / 2 - ruleP.getSize().width / 2 - 10, 25);
+			end.setVisible(true);
+		}
 	}
 }
