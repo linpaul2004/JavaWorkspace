@@ -61,6 +61,8 @@ public class Main {
 		Random ran = new Random();
 		Move mov = new Move();
 		Rotate rot = new Rotate();
+		SoundTry sound = new SoundTry();
+		sound.start();
 		frame.addKeyListener(mov);
 		frame.addKeyListener(rot);
 		for (int i = 0; i < 2; i++) {
@@ -161,7 +163,10 @@ public class Main {
 			while (true) {
 				System.out.print("");
 				if (mod.equals("battle") == true) {
-
+					frame.next1.setVisible(true);
+					frame.next2.setVisible(true);
+					frame.hold1.setVisible(true);
+					frame.hold2.setVisible(true);
 					frame.setSize(1400, 870);
 					frame.setting();
 					break;

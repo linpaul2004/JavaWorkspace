@@ -21,6 +21,8 @@ public class Component extends JFrame {
 	JButton back = new JButton();
 	JLabel showLose = new JLabel();
 	JLabel title = new JLabel();
+	JLabel next1 = new JLabel("1P Next"), next2 = new JLabel("2P Next");
+	JLabel hold1 = new JLabel("1P Hold"), hold2 = new JLabel("2P Hold");
 	JTextArea restline = new JTextArea();
 	JTextArea counter = new JTextArea();
 	ImageIcon iconLose = new ImageIcon("lose.jpg");
@@ -29,6 +31,7 @@ public class Component extends JFrame {
 	public Component() {
 		setSize(500, 800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
 
 		gameStart.setText("Start");
 		gameStart.setSize(gameStart.getPreferredSize());
@@ -89,6 +92,18 @@ public class Component extends JFrame {
 		title.setSize(title.getPreferredSize());
 		title.setLocation(getSize().width / 2 - title.getSize().width / 2, -200);
 
+		next1.setSize(next1.getPreferredSize());
+		next1.setLocation(500, 80);
+
+		next2.setSize(next2.getPreferredSize());
+		next2.setLocation(1200, 80);
+
+		hold1.setSize(hold1.getPreferredSize());
+		hold1.setLocation(500, 230);
+
+		hold2.setSize(hold2.getPreferredSize());
+		hold2.setLocation(1200, 230);
+
 		restline.setBackground(SystemColor.control);
 		restline.setText("Rest line:\n" + 3);
 		restline.setFont(new Font(restline.getFont().getName(), restline.getFont().getStyle(), 40));
@@ -118,6 +133,10 @@ public class Component extends JFrame {
 		add(back);
 		add(restline);
 		add(counter);
+		add(next1);
+		add(next2);
+		add(hold1);
+		add(hold2);
 		//////////////////////////////////////////////////////
 		setLayout(null);
 		setVisible(true);
@@ -197,6 +216,8 @@ public class Component extends JFrame {
 		back.setVisible(true);
 		restline.setVisible(false);
 		counter.setVisible(false);
+		next1.setVisible(true);
+		hold1.setVisible(true);
 		back.setLocation(getSize().width / 2 - rank.getSize().width / 2, 650);
 	}
 
@@ -242,6 +263,8 @@ public class Component extends JFrame {
 		pause.setVisible(false);
 		back.setLocation(getSize().width / 2 - rank.getSize().width / 2, 650);
 		back.setVisible(true);
+		next1.setVisible(false);
+		hold1.setVisible(false);
 		setSize(500, 800);
 		for (int i = 0; i < Main.rowSize; i++) {
 			for (int j = 2; j < Main.colSize; j++) {
@@ -276,6 +299,10 @@ public class Component extends JFrame {
 		challenge.setVisible(false);
 		timeMode.setVisible(false);
 		back.setVisible(false);
+		next1.setVisible(false);
+		hold1.setVisible(false);
+		next2.setVisible(false);
+		hold2.setVisible(false);
 		setSize(500, 800);
 		for (int i = 0; i < Main.rowSize; i++) {
 			for (int j = 2; j < Main.colSize; j++) {
