@@ -46,7 +46,8 @@ public class Main {
 	static long before = 0;
 	static long now = 0;
 	static long pauseTime = 0;
-	static JTextArea counter = new JTextArea();
+	static boolean isback = false;
+	//static JTextArea counter = new JTextArea();
 
 	public static void main(String[] args) {
 		int rand1;
@@ -59,52 +60,6 @@ public class Main {
 		Rotate rot = new Rotate();
 		frame.addKeyListener(mov);
 		frame.addKeyListener(rot);
-		JTextArea restline = new JTextArea();
-
-		//////////////////////////////////////////////////////
-		/*
-		 * while(true){ if(mod.equals("battle") == false) {
-		 * System.out.println(""); frame.gameStart.setVisible(false); try {
-		 * Thread.sleep(500); } catch (InterruptedException e) {
-		 * e.printStackTrace(); } }
-		 * 
-		 * 
-		 * }
-		 */
-		while (true) {
-			System.out.println("");
-			if (mod.equals("battle") == true) {
-				frame.setSize(1400, 870);
-				frame.setting();
-				break;
-			}
-
-			if (mod.equals("single") == true) {
-				frame.singleSetting();
-				while (true) {
-					System.out.println("");
-					if (mod.equals("classic") == true) {
-						frame.setSize(700, 870);
-						frame.setting();
-						break;
-					}
-
-					if (mod.equals("challenge") == true) {
-						frame.setSize(700, 870);
-						frame.setting();
-						break;
-					}
-
-					if (mod.equals("timeMode") == true) {
-						frame.setSize(700, 870);
-						frame.setting();
-						break;
-					}
-				}
-				break;
-			}
-		}
-
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 10; j++) {
 				for (int k = 0; k < 20; k++) {
@@ -127,10 +82,11 @@ public class Main {
 		scoreLabel[0].setLocation(500, 400);
 		frame.add(scoreLabel[0]);
 		scoreLabel[0].setFocusable(false);
+		scoreLabel[0].setVisible(false);
+		
+		
 
-		HighScore.mode = mod;
-
-		if (mod.equals("battle") == true) {
+		//if (mod.equals("battle") == true) {
 			scoreLabel[1] = new JTextArea();
 			scoreLabel[1].setBackground(SystemColor.control);
 			scoreLabel[1].setEditable(false);
@@ -140,7 +96,8 @@ public class Main {
 			scoreLabel[1].setLocation(1200, 400);
 			frame.add(scoreLabel[1]);
 			scoreLabel[1].setFocusable(false);
-		}
+			scoreLabel[1].setVisible(false);
+		//}
 
 		for (int i = 0; i < rowSize; i++) {
 			for (int j = 2; j < colSize; j++) {
@@ -149,14 +106,16 @@ public class Main {
 				lb[0][i][j].setLocation(41 * (i + 1), 41 * (j - 2));
 				lb[0][i][j].setSize(40, 40);
 				frame.add(lb[0][i][j]);
+				lb[0][i][j].setVisible(false);
 
-				if (mod.equals("battle") == true) {
+				//if (mod.equals("battle") == true) {
 					lb[1][i][j] = new JLabel();
 					lb[1][i][j].setIcon(icon);
 					lb[1][i][j].setLocation(41 * (i + 1) + 700, 41 * (j - 2));
 					lb[1][i][j].setSize(40, 40);
 					frame.add(lb[1][i][j]);
-				}
+					lb[1][i][j].setVisible(false);
+				//}
 			}
 		}
 
@@ -167,24 +126,84 @@ public class Main {
 				next[0][i][j].setLocation(41 * (i + 1) + 450, 41 * (j) + 150);
 				next[0][i][j].setSize(40, 40);
 				frame.add(next[0][i][j]);
+				next[0][i][j].setVisible(false);
 
-				if (mod.equals("battle") == true) {
+				//if (mod.equals("battle") == true) {
 					next[1][i][j] = new JLabel();
 					next[1][i][j].setIcon(icon);
 					next[1][i][j].setLocation(41 * (i + 1) + 1150, 41 * (j) + 150);
 					next[1][i][j].setSize(40, 40);
 					frame.add(next[1][i][j]);
-				}
+					next[1][i][j].setVisible(false);
+				//}
 			}
 		}
 		frame.repaint();
 
+		//////////////////////////////////////////////////////
+		while(true){//////////////big while
+			System.out.print("");
+		while (true) {
+			System.out.print("");
+			if (mod.equals("battle") == true) {
+				
+				frame.setSize(1400, 870);
+				frame.setting();
+				break;
+			}
+
+			if (mod.equals("single") == true) {
+				frame.singleSetting();
+				while (true) {
+					System.out.print("");
+					if (mod.equals("classic") == true) {
+						frame.setSize(700, 870);
+						frame.setting();
+						break;
+					}
+
+					if (mod.equals("challenge") == true) {
+						frame.setSize(700, 870);
+						frame.setting();
+						frame.restline.setText("Rest line:\n" + 3);
+						frame.restline.setVisible(true);
+						break;
+					}
+
+					if (mod.equals("timeMode") == true) {
+						frame.setSize(700, 870);
+						frame.setting();
+						frame.restline.setText("Rest line:\n" + 5);
+						frame.restline.setVisible(true);
+						frame.counter.setVisible(true);
+						break;
+					}
+					
+					if (isback == true) {
+						frame.setSize(500, 550);
+						break;
+					}
+				}
+				if(isback == true){
+					frame.singleChooseBack();
+				}
+				else break;
+			}
+		}
+///////////////////////////////////////////////////////////////////////setting end
+		HighScore.mode = mod;
+		
 		while (mod.equals("battle") == true) {
-			System.out.println("");
+			System.out.print("");
+			if(isback == true) {
+				frame.battlePlayBack();
+				break;
+			}
 			if (startSignal == false) {
 				continue;
 			}
-
+			
+			frame.back.setVisible(false);
 			randNext1 = ran.nextInt(7) + 1;
 			randNext2 = ran.nextInt(7) + 1;
 			rand1 = ran.nextInt(7) + 1;
@@ -248,6 +267,9 @@ public class Main {
 			////////////////////////////////////////////////////////////////////////
 			while (loser == -1 && startSignal) {
 				System.out.print("");
+				if(isback == true) {
+					break;
+				}
 				if (Tetris.fall() == 0) {
 
 					if (isClear == false) {
@@ -339,15 +361,21 @@ public class Main {
 				highscore.setVisible(true);
 			}
 			resetGame();
+			frame.back.setVisible(true);
 			frame.showLose.setVisible(false);
 		}
 
 		///////////////////////////////// classic
 		while (mod.equals("classic") == true) {
-			System.out.println("");
+			System.out.print("");
+			if(isback == true) {
+				frame.singlePlayBack();
+				break;
+			}
 			if (startSignal == false) {
 				continue;
 			}
+			frame.back.setVisible(false);
 			randNext1 = ran.nextInt(7) + 1;
 			rand1 = ran.nextInt(7) + 1;
 			current1 = rand1;
@@ -381,6 +409,10 @@ public class Main {
 
 			////////////////////////////////////////////////////////////////////////
 			while (loser == -1 && startSignal) {
+				System.out.print("");
+				if(isback == true) {
+					break;
+				}
 				if (Tetris.fall() == 0) {
 					if (isClear == false) {
 						clear(0);
@@ -429,26 +461,26 @@ public class Main {
 				highscore.setVisible(true);
 			}
 			resetGame();
+			frame.back.setVisible(true);
 			frame.showLose.setVisible(false);
 		}
 
 		while (mod.equals("challenge") == true) {
-			System.out.println("");
+			System.out.print("");
+			if(isback == true) {
+				frame.singlePlayBack();
+				break;
+			}
 			int goal = 3;
 			int add = 1;
 			int other;
 
-			restline.setBackground(SystemColor.control);
-			restline.setText("Rest line:\n" + (goal - line));
-			restline.setFont(new Font(restline.getFont().getName(), restline.getFont().getStyle(), 40));
-			restline.setSize(restline.getPreferredSize());
-			restline.setLocation(500, 650);
-			frame.add(restline);
-			restline.setFocusable(false);
+			
 			//////
 			if (startSignal == false) {
 				continue;
 			}
+			frame.back.setVisible(false);
 
 			randNext1 = ran.nextInt(7) + 1;
 			rand1 = ran.nextInt(7) + 1;
@@ -483,19 +515,24 @@ public class Main {
 
 			////////////////////////////////////////////////////////////////////////
 			while (loser == -1) {
+				System.out.print("");
+				if(isback == true) {
+					frame.singlePlayBack();
+					break;
+				}
 				if (Tetris.fall() == 0) {
 					if (isClear == false) {
 						clear(0);
 					}
 					other = score[0] / 100;
-					restline.setText("Rest line:\n" + (goal - other));
+					frame.restline.setText("Rest line:\n" + (goal - other));
 					if (goal <= other) {
 						other = other - goal;
 						add += 2;
 						goal += add;
 
 						Tetris.speed += 40;
-						restline.setText("Rest line:\n" + (goal - other));
+						frame.restline.setText("Rest line:\n" + (goal - other));
 					}
 					loser = isOver();
 					rot.rotation1 = 0;
@@ -541,31 +578,26 @@ public class Main {
 				highscore.setVisible(true);
 			}
 			resetGame();
+			frame.back.setVisible(true);
 			frame.showLose.setVisible(false);
-			restline.setText("Rest line:\n0");
+			frame.restline.setText("Rest line:\n0");
 		}
 
 		while (mod.equals("timeMode") == true) {
-			System.out.println("");
+			System.out.print("");
+			if(isback == true) {
+				frame.singlePlayBack();
+				break;
+			}
 			line = 5;
+			
 			scoreLabel[0].setVisible(false);
-			counter.setBackground(SystemColor.control);
-			counter.setText("Time:\n" + (now - before) / 1000);
-			counter.setFont(new Font(counter.getFont().getName(), counter.getFont().getStyle(), 40));
-			counter.setSize(counter.getPreferredSize());
-			counter.setLocation(500, 400);
-			frame.add(counter);
-			restline.setBackground(SystemColor.control);
-			restline.setText("Rest line:\n" + line);
-			restline.setFont(new Font(restline.getFont().getName(), restline.getFont().getStyle(), 40));
-			restline.setSize(restline.getPreferredSize());
-			restline.setLocation(500, 650);
-			frame.add(restline);
-			restline.setFocusable(false);
-
+			
+			
 			if (startSignal == false) {
 				continue;
 			}
+			frame.back.setVisible(false);
 
 			before = System.currentTimeMillis();
 
@@ -602,6 +634,10 @@ public class Main {
 
 			////////////////////////////////////////////////////////////////////////
 			while (loser == -1 && startSignal) {
+				System.out.print("");
+				if(isback == true) {
+					break;
+				}
 				if (line <= 0) {
 					HighScore.setHighscore((int) (now - before) / 1000, loser);
 					highscore.setLocationRelativeTo(frame);
@@ -615,7 +651,7 @@ public class Main {
 					if (isClear == false) {
 						clear(0);
 					}
-					restline.setText("Rest line:\n" + line);
+					frame.restline.setText("Rest line:\n" + line);
 					loser = isOver();
 					rot.rotation1 = 0;
 					rand1 = randNext1;
@@ -662,10 +698,13 @@ public class Main {
 				before = 0;
 			}
 			resetGame();
+			frame.back.setVisible(true);
 
 			frame.showLose.setVisible(false);
 
 		}
+		
+		}//big while
 	}
 
 	public static void resetGame() {
@@ -679,7 +718,7 @@ public class Main {
 		//////////
 		attacktime[0] = attacktime[1] = 0;
 		//////////
-
+        
 		Tetris.speed = 1;
 		startSignal = false;
 		for (int i = 0; i < 2; i++) {
@@ -693,11 +732,15 @@ public class Main {
 			for (int j = 0; j < 4; j++) {
 				x[i][j] = 0;
 				y[i][j] = 0;
+				hintx[i][j]=0;
+				hinty[i][j]=0;
 			}
 		}
 		setIcon(0);
+		deHint(0);
 		if (Main.mod.equals("battle") == true) {
 			setIcon(1);
+			deHint(1);
 		}
 	}
 
@@ -837,22 +880,26 @@ public class Main {
 				attacktime[0] += up;
 
 				demap(1);
+				
 				isEmpty = true;
 				tmp = 0;
-				for (int i = 0; i < 4; i++) {
+		/*		for (int i = 0; i < 4; i++) {
 					tmp = Main.y[1][i] + up;
 					if (Main.player[1][Main.x[1][i]][tmp] > 0) {
 						isEmpty = false;
 					}
 				}
-
+       */
 				if (isEmpty == false) {
 					while (blk.fallBlock(1) == false) {
 						for (int i = 0; i < 4; i++) {
 							Main.y[1][i]++;
 						}
 					}
+					deHint(1);
 					map(1, Main.current2);
+					setHint(1);
+					
 				}
 				// up
 				for (int i = 0; i < Main.colSize - up; i++) {
@@ -870,8 +917,11 @@ public class Main {
 					}
 				}
 				///////
-				if (isEmpty == true)
+				if (isEmpty == true){
+					deHint(1);
 					map(1, Main.current2);
+					setHint(1);
+				}
 			}
 
 		} else {
@@ -898,7 +948,9 @@ public class Main {
 							Main.y[0][i]++;
 						}
 					}
+					deHint(0);
 					map(0, Main.current1);
+					setHint(0);
 				}
 
 				//
@@ -918,8 +970,11 @@ public class Main {
 					}
 				}
 				//
-				if (isEmpty == true)
+				if (isEmpty == true){
+					deHint(0);
 					map(0, Main.current1);
+				    setHint(0);
+				}
 			}
 
 		}

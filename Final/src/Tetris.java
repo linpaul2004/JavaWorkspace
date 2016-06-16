@@ -15,7 +15,7 @@ public abstract class Tetris {
 			
 			if(Main.mod.equals("timeMode") == true){
 				Main.now = System.currentTimeMillis();
-				Main.counter.setText("Time:\n" + (Main.now-Main.before-Main.pauseTime)/1000 );
+				Main.frame.counter.setText("Time:\n" + (Main.now-Main.before-Main.pauseTime)/1000 );
 			}
 			if (blk.bottomBlock(0) == true) {
 				return 0;

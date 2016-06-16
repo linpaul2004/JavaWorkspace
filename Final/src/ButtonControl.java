@@ -15,8 +15,10 @@ public class ButtonControl implements ActionListener {
 		// TODO Auto-generated method stub
 		if (e.getActionCommand().equals("Battle")) {
 			Main.mod = "battle";
+			Main.isback = false;
 		} else if (e.getActionCommand().equals("Single")) {
 			Main.mod = "single";
+			Main.isback = false;
 		} else if (e.getActionCommand().equals("Start")) {
 			Main.startSignal = true;
 			Main.loser = -1;
@@ -25,17 +27,24 @@ public class ButtonControl implements ActionListener {
 			Main.frame.gameStart.setSize(Main.frame.gameStart.getPreferredSize());
 			Main.frame.pause.setText("Pause");
 			Main.frame.pause.setSize(Main.frame.pause.getPreferredSize());
+			Main.isback = false;
 		} else if (e.getActionCommand().equals("Rank")) {
 			// JOptionPane.showMessageDialog(null, Main.setHighScore);
 			HighScore.readScore();
 			Main.highscore.setLocationRelativeTo(Main.frame);
 			Main.highscore.setVisible(true);
+			Main.isback = false;
 		} else if (e.getActionCommand().equals("Classic")) {
 			Main.mod = "classic";
+			Main.isback = false;
 		} else if (e.getActionCommand().equals("Challenge")) {
 			Main.mod = "challenge";
+			Main.isback = false;
 		} else if (e.getActionCommand().equals("Time")) {
 			Main.mod = "timeMode";
+			Main.isback = false;
+		} else if (e.getActionCommand().equals("Back")) {
+			Main.isback = true;
 		} else if (e.getActionCommand().equals("Clean")) {
 			HighScore.clean();
 		} else if (e.getActionCommand().equals("Abort")) {
