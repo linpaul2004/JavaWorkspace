@@ -933,24 +933,25 @@ public class Main {
 				attacktime[0] += up;
 
 				demap(1);
-
+				deHint(1);
 				isEmpty = true;
 				tmp = 0;
 
 				for (int i = 0; i < 4; i++) {
 					tmp = Main.y[1][i] + up;
-					if (Main.player[1][Main.x[1][i]][tmp] > 0) {
-						isEmpty = false;
+					if(tmp>=Main.colSize || Main.player[1][Main.x[1][i]][tmp] > 0){
+					  isEmpty = false;
 					}
+
 				}
 
 				if (isEmpty == false) {
-					while (blk.fallBlock(1) == false) {
+					while (blk.bottomBlock(1)==false && blk.fallBlock(1) == false ) {
 						for (int i = 0; i < 4; i++) {
 							Main.y[1][i]++;
 						}
 					}
-					deHint(1);
+					
 					map(1, Main.current2);
 					// setHint(1);
 
@@ -972,10 +973,11 @@ public class Main {
 				}
 				///////
 				if (isEmpty == true) {
-					deHint(1);
+					
 					map(1, Main.current2);
-					// setHint(1);
+				//	 setHint(1);
 				}
+				setIcon(1);
 			}
 
 		} else {
@@ -986,23 +988,24 @@ public class Main {
 				attacktime[1] += up;
 				System.out.println(up);
 				demap(0);
-
+				deHint(0);
 				isEmpty = true;
 				tmp = 0;
 				for (int i = 0; i < 4; i++) {
 					tmp = Main.y[0][i] + up;
-					if (Main.player[0][Main.x[0][i]][tmp] > 0) {
-						isEmpty = false;
+					if(tmp>=Main.colSize || Main.player[1][Main.x[0][i]][tmp] > 0){
+					  isEmpty = false;
 					}
+
 				}
 
+
 				if (isEmpty == false) {
-					while (blk.fallBlock(0) == false) {
+					while (blk.bottomBlock(0)==false && blk.fallBlock(0) == false) {
 						for (int i = 0; i < 4; i++) {
 							Main.y[0][i]++;
 						}
 					}
-					deHint(0);
 					map(0, Main.current1);
 					// setHint(0);
 				}
@@ -1025,12 +1028,11 @@ public class Main {
 				}
 				//
 				if (isEmpty == true) {
-					deHint(0);
 					map(0, Main.current1);
-					setHint(0);
+					//setHint(0);
 				}
 			}
-
+			setIcon(0);
 		}
 	}
 

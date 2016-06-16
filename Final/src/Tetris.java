@@ -53,7 +53,7 @@ public abstract class Tetris {
 
 			}
 
-			while (Main.pause || Main.loser == -2) {
+			while (Main.pause) {
 				try {
 					Thread.sleep(100);
 				} catch (InterruptedException e) {
